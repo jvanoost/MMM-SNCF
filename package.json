@@ -1,0 +1,29 @@
+{
+  "name": "MMM-SNCF",
+  "version": "0.1.0",
+  "description": "SNCF Next departure module for MagicMirror",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jvanoost/MMM-SNCF"
+  },
+  "keywords": [
+    "magic mirror",
+    "smart mirror",
+    "localtransport",
+    "module",
+    "sncf",
+    "train"
+  ],
+  "author": "Jérôme Van Oost",
+  "contributors": "https://github.com/jvanoost/MMM-SNCF/graphs/contributors",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jvanoost/MMM-SNCF/issues"
+  },
+  "homepage": "https://github.com/jvanoost/MMM-SNCF#readme",
+  "dependencies": {
+    "unirest": "latest",
+    "node-forge": "latest",
+    "xml2js":"latest"
+    }
+}

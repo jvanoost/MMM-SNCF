@@ -1,0 +1,18 @@
+.trainname
+{
+    border: 2px solid #ffffff;
+    
+    background: #ffffff;
+    color:black;
+    border-radius: 5px;
+}
+
+.transilien
+{
+    line-height:1.5em;
+}
+
+.state
+{
+    color:yellow !important;
+}
