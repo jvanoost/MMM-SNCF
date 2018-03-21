@@ -39,7 +39,7 @@ module.exports = NodeHelper.create({
      */
     updateTimetable: function() {
         var url = "https://api.sncf.com/v1/coverage/sncf/journeys?from="+ this.config.departUIC + "&to="+ this.config.arriveeUIC+"&datetime="+now()+"&count="+  this.config.nbLines;
-        console.log(\r\nURL : "+url);
+        console.log("\r\nURL : "+url);
 	    if (this.config.debugging) console.log("\r\nURL loaded for SNCF:"+url);
         var self = this;
         var retry = false;
