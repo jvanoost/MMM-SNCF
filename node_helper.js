@@ -25,6 +25,19 @@ function now() {
     return newDate.today() + "T" + newDate.timeNow();
   };
 
+function btoa(str) {
+    var buffer
+      ;
+
+    if (str instanceof Buffer) {
+      buffer = str;
+    } else {
+      buffer = new Buffer(str.toString(), 'binary');
+    }
+
+    return buffer.toString('base64');
+  };
+
 module.exports = NodeHelper.create({
 
     updateTimer: "",
@@ -47,8 +60,9 @@ module.exports = NodeHelper.create({
         // calling this API
         var request = unirest.get(url);
         request.auth({
-            user: this.config.login,
-            pass: this.config.password,
+            Authorization: 'Basic ' + btoa(this.config.login),
+	    //user: this.config.login,
+            //pass: this.config.password,
             sendImmediately: true
         });
 
