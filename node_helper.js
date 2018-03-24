@@ -59,7 +59,7 @@ module.exports = NodeHelper.create({
 
         // calling this API
         var request = unirest.get(url);
-        request.header({
+        request.headers({
             Authorization: 'Basic ' + btoa(this.config.login),
 	//    //user: this.config.login,
         //    //pass: this.config.password,
