@@ -59,11 +59,13 @@ module.exports = NodeHelper.create({
 
         // calling this API
         var request = unirest.get(url);
+	request.headers({
+		'Authorization': 'Basic ' + btoa(this.config.login);
+	})
         request.auth({
-            //'Authorization': 'Basic ' + btoa(this.config.login),
-	    user: this.config.login,
+            user: this.config.login,
             pass: this.config.password,
-            sendImmediately: false
+            sendImmediately: true
         });
 
         // from the documentation of the api, it'll be mandatory in next version of the api
@@ -71,6 +73,8 @@ module.exports = NodeHelper.create({
         request.end(function(r) {
                 if (r.error) {
                     console.log(self.name + " : " + r.error);
+			console.log("Erreur : "+r.body);
+			console.log(r);
                     retry = true;
                 } else {
                     self.processTransports(r.body);
