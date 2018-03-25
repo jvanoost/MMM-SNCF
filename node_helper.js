@@ -53,17 +53,17 @@ module.exports = NodeHelper.create({
     updateTimetable: function() {
         var url = "https://api.sncf.com/v1/coverage/sncf/journeys?from="+ this.config.departUIC + "&to="+ this.config.arriveeUIC+"&datetime="+now()+"&count="+  this.config.nbLines;
         console.log("\r\nURL : "+url);
-	    if (this.config.debugging) console.log("\r\nURL loaded for SNCF:"+url);
+	    if (this.config.debugging) console.log("\r\nURL loaded for SNCF: "+url);
         var self = this;
         var retry = false;
 
         // calling this API
         var request = unirest.get(url);
-        request.headers({
-            'Authorization': 'Basic ' + btoa(this.config.login),
-	//    //user: this.config.login,
-        //    //pass: this.config.password,
-        //    sendImmediately: true
+        request.auth({
+            //'Authorization': 'Basic ' + btoa(this.config.login),
+	    user: this.config.login,
+            pass: this.config.password,
+            sendImmediately: false
         });
 
         // from the documentation of the api, it'll be mandatory in next version of the api
