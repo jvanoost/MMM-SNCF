@@ -23,7 +23,7 @@ Clone the git in the /modules folder of Magic Mirror and run the "npm install" c
 {
     module: 'MMM-SNCF',
     position: 'top_right',
-    header:'Lille-Flandres vers Orchies',
+    header:'Lille-Flandres to Orchies',
     config:{
         departUIC:"stop_area:OCE:SA:87286005",
         arriveeUIC:"stop_area:OCE:SA:87286583",
