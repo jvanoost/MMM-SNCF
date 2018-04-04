@@ -73,7 +73,7 @@ module.exports = NodeHelper.create({
         request.end(function(r) {
                 if (r.error) {
                     console.log(self.name + " : " + r.error);
-			//console.log(r);
+			console.log(r.body); // affiche le corps de l'erreur
                     retry = true;
                 } else {
                     self.processTransports(r.body);
