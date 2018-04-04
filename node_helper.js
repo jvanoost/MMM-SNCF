@@ -60,13 +60,13 @@ module.exports = NodeHelper.create({
         // calling this API
         var request = unirest.get(url);
 	request.headers({
-		'Authorization': 'Basic ' + btoa(this.config.login),
+		'Authorization': (this.config.login),
 	});
-        request.auth({
-            user: this.config.login,
-            pass: this.config.password,
-            sendImmediately: true
-        });
+        //request.auth({
+        //    user: this.config.login,
+        //    pass: this.config.password,
+        //    sendImmediately: true
+        //});
 
         // from the documentation of the api, it'll be mandatory in next version of the api
         //request.headers({'Accept': 'application/vnd.sncf.transilien.od.depart+xml;vers=1.0'});
