@@ -8,22 +8,7 @@
 const NodeHelper = require("node_helper");
 const forge = require('node-forge');
 const unirest = require('unirest');
-
-function now() {
-    // For todays date;
-    Date.prototype.today = function () {
-        return this.getFullYear()+(((this.getMonth()+1) < 10)?"0":"") + (this.getMonth()+1)+((this.getDate() < 10)?"0":"") + this.getDate();
-    }
-
-    // For the time now
-    Date.prototype.timeNow = function () {
-         return ((this.getHours() < 10)?"0":"") + this.getHours() + ((this.getMinutes() < 10)?"0":"") + this.getMinutes() + ((this.getSeconds() < 10)?"0":"") + this.getSeconds();
-    }
-
-    var newDate = new Date();
-		var datetime = "LastSync: " + newDate.today() + "T" + newDate.timeNow();
-    return newDate.today() + "T" + newDate.timeNow();
-  };
+const moment = require('moment');
 
 function btoa(str) {
     var buffer
@@ -51,7 +36,7 @@ module.exports = NodeHelper.create({
      * Calls processTransports on succesfull response.
      */
     updateTimetable: function() {
-        var url = "https://api.sncf.com/v1/coverage/sncf/journeys?from="+ this.config.departUIC + "&to="+ this.config.arriveeUIC+"&datetime="+now()+"&count="+  this.config.nbLines;
+        var url = "https://api.sncf.com/v1/coverage/sncf/journeys?from="+ this.config.departUIC + "&to="+ this.config.arriveeUIC+"&datetime="+moment().toISOString() +"&count="+  this.config.nbLines;
         console.log("\r\nURL : "+url);
 	    if (this.config.debugging) console.log("\r\nURL loaded for SNCF: "+url);
         var self = this;
