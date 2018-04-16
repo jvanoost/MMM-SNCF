@@ -77,6 +77,7 @@ module.exports = NodeHelper.create({
     processTransports: function(data) {
 
         this.transports = [];
+	    moment().locale(this.config.language);
 
         // we don't want to return too much trains
         responseInJson = data.journeys;
