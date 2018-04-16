@@ -96,8 +96,8 @@ module.exports = NodeHelper.create({
 
 		    	if(nextTrain.sections[j].mode != "walking")
 		    	{
-		    		var _date = '' + nextTrain.sections[j].departure_date_time;
-		    		var _dateTheorique = '' + nextTrain.sections[j].base_departure_date_time;
+		    		var _date = '' + moment(nextTrain.sections[j].departure_date_time).format('llll');
+		    		var _dateTheorique = '' + moment(nextTrain.sections[j].base_departure_date_time).format('llll');
 
 				this.transports.push({
 				    name: nextTrain.sections[j].display_informations.headsign,
