@@ -96,13 +96,13 @@ module.exports = NodeHelper.create({
 
 		    	if(nextTrain.sections[j].mode != "walking")
 		    	{
-		    		var _date = '' + moment(nextTrain.sections[j].departure_date_time).format('llll');
-		    		var _dateTheorique = '' + moment(nextTrain.sections[j].base_departure_date_time).format('llll');
+		    		var _date = '' + nextTrain.sections[j].departure_date_time;
+		    		var _dateTheorique = '' + nextTrain.sections[j].base_departure_date_time);
 
 				this.transports.push({
 				    name: nextTrain.sections[j].display_informations.headsign,
-				    date: _date.substring(_date.lastIndexOf(" ")+1),
-				    dateTheorique : _dateTheorique.substring(_date.lastIndexOf(" ")+1),
+				    date: moment(_date.substring(_date.lastIndexOf(" ")+1)).format('llll'),
+				    dateTheorique : moment(_dateTheorique.substring(_date.lastIndexOf(" ")+1)).format('llll'),
 				    mode: nextTrain.sections[j].duration/60, // durée en minutes
 				    state: nextTrain.status
 				});
