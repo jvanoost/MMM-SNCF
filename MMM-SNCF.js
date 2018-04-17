@@ -57,7 +57,7 @@ Module.register("MMM-SNCF", {
 
             var transportNameCell = document.createElement("td");
             var content = ""
-            if(transports.state !== undefined )
+            if(transports.state !== "" )
             {
                 content = "<span class='state'><i class='fa fa-clock-o aria-hidden='true'></i> " + transports.state +"</span> &nbsp;&nbsp; <span class='trainname'>" +transports.name +"</span>";
             }
