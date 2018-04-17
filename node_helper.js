@@ -99,12 +99,18 @@ module.exports = NodeHelper.create({
 		    	{
 		    		var _date = '' + nextTrain.sections[j].departure_date_time;
 		    		var _dateTheorique = '' + nextTrain.sections[j].base_departure_date_time;
+				
+				_date = _date.substring(_date.lastIndexOf(" ")+1);
+				_dateTheorique = _dateTheorique.substring(_date.lastIndexOf(" ")+1);
+				
+				var _delay = moment.utc(moment(_date).diff(moment(_dateTheorique))).format('HH:mm:ss');
 
 				this.transports.push({
 				    name: nextTrain.sections[j].display_informations.headsign,
-				    date: moment(_date.substring(_date.lastIndexOf(" ")+1)).format('llll'),
-				    dateTheorique : moment(_dateTheorique.substring(_date.lastIndexOf(" ")+1)).format('llll'),
-				    mode: nextTrain.sections[j].duration/60, // durée en minutes
+				    date: moment(_date).format('llll'),
+				    dateTheorique : moment(_dateTheorique).format('llll'),
+				    duration: nextTrain.sections[j].duration/60, // durée en minutes
+				    delay: _delay,
 				    state: nextTrain.status
 				});
 		    	}
