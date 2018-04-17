@@ -59,11 +59,11 @@ Module.register("MMM-SNCF", {
             var content = ""
             if(transports.state !== "" )
             {
-                content = "<span class='state'><i class='fa fa-clock-o aria-hidden='true'></i> " + transports.state +"</span> &nbsp;&nbsp; <span class='trainname'>" +transports.name +"</span>";
+                content = "<span class='state'><i class='fa fa-clock-o aria-hidden='true'></i> " + transports.delay +"</span> &nbsp;&nbsp; <span class='trainname'>" +transports.name +"</span>";
             }
             else
             {
-                content = "<span class='trainname'>" +transports.name +"</span>";
+                content = "<span class='trainname'>" +transports.duration +"</span>";
             }
 
             content = content + "&nbsp;&nbsp;&nbsp;&nbsp;" + transports.date;
