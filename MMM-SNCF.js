@@ -63,7 +63,7 @@ Module.register("MMM-SNCF", {
             }
             else
             {
-                content = "<span class='trainname'>" +transports.duration +"</span>";
+                content = "<span class='trainname'>" +transports.duration +" mn</span>";
             }
 
             content = content + "&nbsp;&nbsp;&nbsp;&nbsp;" + transports.date;
