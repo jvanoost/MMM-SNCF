@@ -103,7 +103,7 @@ module.exports = NodeHelper.create({
 				_date = _date.substring(_date.lastIndexOf(" ")+1);
 				_dateTheorique = _dateTheorique.substring(_date.lastIndexOf(" ")+1);
 				
-				var _delay = moment.utc(moment(_date).diff(moment(_dateTheorique))).format('HH:mm:ss');
+				var _delay = moment(_date).diff(moment(_dateTheorique),"minutes");
 
 				this.transports.push({
 				    name: nextTrain.sections[j].display_informations.headsign,
