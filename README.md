@@ -29,6 +29,8 @@ Clone the git in the /modules folder of Magic Mirror and run the "npm install" c
     config:{
         departUIC:"stop_area:OCE:SA:87286005",
         arriveeUIC:"stop_area:OCE:SA:87286583",
+        trainsdisplayed:'5',
+        language:"fr",
         login:"", // You must add your API login and password
         password:""
     }
