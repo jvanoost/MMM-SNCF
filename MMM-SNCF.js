@@ -62,7 +62,7 @@ Module.register("MMM-SNCF", {
                 content = "<span class='state'><i class='fa fa-clock-o aria-hidden='true'></i> " + transports.delay +"</span> &nbsp;&nbsp;";
             //}
             
-            content = "<span class='trainname'>" +transports.duration +" mn</span>";
+            content = content + "<span class='trainname'>" +transports.duration +" mn</span>";
        
             content = content + "&nbsp;&nbsp;&nbsp;&nbsp;" + transports.date;
             transportNameCell.innerHTML = content;
