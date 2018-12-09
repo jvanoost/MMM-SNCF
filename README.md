@@ -17,7 +17,7 @@ Clone the git in the /modules folder of Magic Mirror and run the "npm install" c
 
 ## Configuration
 
-1- You need to find your train station and find the **UIC** of the train station (*not the uic7 column, the UIC*). You can look [here](https://ressources.data.sncf.com/explore/dataset/referentiel-gares-voyageurs)
+1- You need to find your train station and find the **UIC** of the train station (_not the uic7 column, the UIC_). You can look [here](https://ressources.data.sncf.com/explore/dataset/referentiel-gares-voyageurs)
 
 2- Specify missing values in the configuration. You need the UIC of your train station and the UIC of the arrival station.
 
@@ -31,15 +31,12 @@ Clone the git in the /modules folder of Magic Mirror and run the "npm install" c
         arriveeUIC:"stop_area:OCE:SA:87286583",
         trainsdisplayed:'5',
         language:"fr",
-        login:"", // You must add your API login and password
-        password:""
+        apiKey:"", // You must add your API key
     }
 },
 ```
 
 3- Don't forget to add login/password, which are the credentials to access the API. You can try them in your browser by trying to open the url [https://api.sncf.com/v1](https://api.sncf.com/v1)
-
-
 
 ## Further information and support
 
