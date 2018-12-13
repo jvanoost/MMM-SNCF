@@ -121,7 +121,8 @@ module.exports = NodeHelper.create({
 
         this.loaded = true;
         this.sendSocketNotification("TRAINS", {
-            transports: this.transports
+		id: this.config.id,
+		transports: this.transports
         });
     },
 
