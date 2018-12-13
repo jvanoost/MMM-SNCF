@@ -91,6 +91,10 @@ Module.register("MMM-SNCF", {
                 Log.info("Trains received");
                 Log.info(payload.transports);
             }
+            
+            if (payload.id === this.config.id) {
+            }
+            
             this.transports = payload.transports;
             this.loaded = true;
             this.updateDom(this.config.animationSpeed);
