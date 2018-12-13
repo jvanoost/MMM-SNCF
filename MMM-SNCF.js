@@ -93,10 +93,11 @@ Module.register("MMM-SNCF", {
             }
             
             if (payload.id === this.config.id) {
+                this.transports = payload.transports;
+                this.loaded = true;
             }
             
-            this.transports = payload.transports;
-            this.loaded = true;
+            
             this.updateDom(this.config.animationSpeed);
         }
     }
