@@ -64,7 +64,15 @@ Module.register("MMM-SNCF", {
             
             content = content + "<span class='trainname'>" +transports.duration +" mn</span>";
        
-            content = content + "&nbsp;&nbsp;&nbsp;&nbsp;" + transports.date;
+            if(transports.date == transports.dateTheorique )
+            {
+                content = content + "&nbsp;&nbsp;&nbsp;&nbsp;" + transports.date;
+            }
+            else
+            {
+                content = content + "&nbsp;&nbsp;&nbsp;&nbsp;" + "<span class='oldHoraire'>" + transports.dateTheorique + "</span>";
+                content = content + "&nbsp;&nbsp;&nbsp;&nbsp;" + transports.date
+            }
             transportNameCell.innerHTML = content;
             transportNameCell.className = "align-right bright";
             row.appendChild(transportNameCell);
