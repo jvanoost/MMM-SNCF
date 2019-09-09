@@ -61,10 +61,14 @@ Module.register("MMM-SNCF", {
 			{
 				content = content + "<span class='state'><i class='fa fa-ban aria-hidden='true'></i> Supprimé</span> &nbsp;&nbsp;";
 			}
-            //if(transports.state !== "" )
-            //{
+            if(transports.state != "" )
+            {
+                content = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i> " + transports.state +"</span> &nbsp;";
+			}
+			if(transports.state != "" )
+            {
                 content = "<span class='state'><i class='fa fa-clock-o aria-hidden='true'></i> " + transports.delay +"</span> &nbsp;&nbsp;";
-			//}
+			}
             
             content = content + "<span class='trainname'>" +transports.duration +" mn</span>";
 			
