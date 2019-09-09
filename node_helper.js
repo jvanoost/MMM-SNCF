@@ -75,6 +75,17 @@ processTransports: function(data) {
 	
 	// we don't want to return too much trains
 	responseInJson = data.journeys;
+	
+	// we search if there are disruptions
+	if(data.disruptions)
+	{
+		disruptions = data.disruptions;
+	}
+	else
+	{
+		disruptions = 0;
+	}
+	
 	var count = this.config.trainsdisplayed;
 	if(responseInJson.length < count)
 	{
@@ -93,6 +104,10 @@ processTransports: function(data) {
 		    	{
 		    		var _date = '' + nextTrain.sections[j].departure_date_time;
 		    		var _dateTheorique = '' + nextTrain.sections[j].base_departure_date_time;
+					var _alert = nextTrain.sections[j].display_informations.links;
+					
+					var _disruptionMessage = '';
+					
 					
 					_date = _date.substring(_date.lastIndexOf(" ")+1);
 					_dateTheorique = _dateTheorique.substring(_date.lastIndexOf(" ")+1);
@@ -105,6 +120,7 @@ processTransports: function(data) {
 						dateTheorique : moment(_dateTheorique).format('llll'),
 						duration: nextTrain.sections[j].duration/60, // duration in minutes
 						delay: _delay,
+						disruptionMessage: _disruptionMessage,
 						state: nextTrain.status
 					});
 				}
