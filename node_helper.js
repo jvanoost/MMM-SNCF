@@ -149,7 +149,7 @@ processTransports: function(data) {
 						//console.log(disruptions);
 						
 						// Searching our disruption ID in all disruption
-						for (var i=0; k<disruptions.length; k++) 
+						for (var k=0; k<disruptions.length; k++) 
 						{
 							if(disruptions[k].disruption_id == _idDisruption)
 							{
