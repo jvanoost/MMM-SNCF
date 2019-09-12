@@ -145,6 +145,8 @@ processTransports: function(data) {
 					if(disruptions != 0)
 					{
 						_disruptionInfo = {};
+						console.log(disruptions);
+						console.log("id disruption : "+_idDisruption);
 						// Searching our disruption ID in all disruption
 						for (var i=0; i<disruptions.length; i++) 
 						{
