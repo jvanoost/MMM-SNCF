@@ -143,7 +143,26 @@ processTransports: function(data) {
 					var _disruptionInfo = 0;
 					if(disruptions != 0)
 					{
-						_disruptionInfo = getDisruptionInfo(disruptions, _idDisruption);
+						_disruptionInfo = {};
+						// Searching our disruption ID in all disruption
+						for (var i=0; i<disruptions.length; i++) 
+						{
+							if(disruptions[i].disruption_id == idSearched)
+							{
+								// Searching our depart stop in List of impacted stops
+								var _impactedStops = disruptions[i].impacted_objects[0].impacted_stops;
+								for (var j=0; j<_impactedStops.length; j++)
+								{
+									if(_impactedStops[j].stop_point.id == this.config.departUIC)
+									{
+										_disruptionInfo['amended_departure_time'] = _impactedStops[j].amended_departure_time;
+										_disruptionInfo['cause'] = _impactedStops[j].cause;
+										
+										//return _disruptionInfo;
+									}
+								}
+							}
+						}
 						console.log("\r\nDisruption info: ");
 						console.log(_disruptionInfo);
 					}
