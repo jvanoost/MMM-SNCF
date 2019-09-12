@@ -170,14 +170,14 @@ processTransports: function(data) {
 						console.log("\r\nDisruption info: ");
 						console.log(_disruptionInfo);
 					}
-					if(_disruptionInfo.amended_departure_time != undefined)
-					{
-						_date = _disruptionInfo.amended_departure_time.substring(_disruptionInfo.amended_departure_time.lastIndexOf(" ")+1);
-					}
-					else
-					{
+					//if(_disruptionInfo.amended_departure_time != undefined)
+					//{
+					//	_date = _disruptionInfo.amended_departure_time.substring(_disruptionInfo.amended_departure_time.lastIndexOf(" ")+1);
+					//}
+					//else
+					//{
 						_date = _date.substring(_date.lastIndexOf(" ")+1);
-					}
+					//}
 					
 					_dateTheorique = _dateTheorique.substring(_date.lastIndexOf(" ")+1);
 					
