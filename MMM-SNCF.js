@@ -79,7 +79,12 @@ Module.register("MMM-SNCF", {
             else
             {
                 content = content + "&nbsp;&nbsp;&nbsp;&nbsp;" + "<span class='oldHoraire'>" + transports.dateTheorique + "</span>";
-                content = content + "&nbsp;&nbsp;&nbsp;&nbsp;" + transports.disruptionInfo.amended_departure_time;
+				if(transports.disruptionInfo !== 0)
+				{
+					content = content + "&nbsp;&nbsp;&nbsp;&nbsp;" + transports.disruptionInfo.amended_departure_time;
+					content = content + "<br /><span class='disruptionCause'>" + transports.disruptionInfo.cause + "</span>";
+				}
+                
 			}
             transportNameCell.innerHTML = content;
             transportNameCell.className = "align-right bright";
