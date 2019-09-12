@@ -72,7 +72,7 @@ Module.register("MMM-SNCF", {
             
             content = content + "<span class='trainname'>" +transports.duration +" mn</span>";
 			
-            if(transports.delay > 0 )
+            if(transports.delay == 0 )
             {
                 content = content + "&nbsp;&nbsp;&nbsp;&nbsp;" + transports.date;
 			}
