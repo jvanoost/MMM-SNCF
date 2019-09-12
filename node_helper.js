@@ -149,19 +149,19 @@ processTransports: function(data) {
 						//console.log(disruptions);
 						
 						// Searching our disruption ID in all disruption
-						for (var i=0; i<disruptions.length; i++) 
+						for (var i=0; k<disruptions.length; k++) 
 						{
-							if(disruptions[i].disruption_id == _idDisruption)
+							if(disruptions[k].disruption_id == _idDisruption)
 							{
 								// Searching our depart stop in List of impacted stops
-								var _impactedStops = disruptions[i].impacted_objects[0].impacted_stops;
+								var _impactedStops = disruptions[k].impacted_objects[0].impacted_stops;
 								//console.log(_impactedStops);
-								for (var k=0; k<_impactedStops.length; k++)
+								for (var l=0; l<_impactedStops.length; l++)
 								{
-									if(_impactedStops[k].stop_point.id == this.config.departUIC)
+									if(_impactedStops[l].stop_point.id == this.config.departUIC)
 									{
-										_disruptionInfo['amended_departure_time'] = _date.substring(0,9) + _impactedStops[k].amended_departure_time;
-										_disruptionInfo['cause'] = _impactedStops[k].cause;
+										_disruptionInfo['amended_departure_time'] = _date.substring(0,9) + _impactedStops[l].amended_departure_time;
+										_disruptionInfo['cause'] = _impactedStops[l].cause;
 										
 										//return _disruptionInfo;
 									}
@@ -183,6 +183,7 @@ processTransports: function(data) {
 					_dateTheorique = _dateTheorique.substring(_date.lastIndexOf(" ")+1);
 					
 					var _delay = moment(_date).diff(moment(_dateTheorique),"minutes");
+					console.log("Delay : "+_delay);
 					
 					this.transports.push({
 						name: nextTrain.sections[j].display_informations.headsign,
