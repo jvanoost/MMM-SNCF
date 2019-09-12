@@ -75,6 +75,17 @@ processTransports: function(data) {
 	
 	// we don't want to return too much trains
 	responseInJson = data.journeys;
+	
+	// we search if there are disruptions
+	if(data.disruptions)
+	{
+		disruptions = data.disruptions;
+	}
+	else
+	{
+		disruptions = 0;
+	}
+	
 	var count = this.config.trainsdisplayed;
 	if(responseInJson.length < count)
 	{
@@ -82,19 +93,38 @@ processTransports: function(data) {
 	}
 	
 	for (var i = 0; i < count; i++) {
-		
 		var nextTrain = responseInJson[i];
-		
 		if(nextTrain !== undefined)
 		{
-			for(var j=0; j<nextTrain.sections.length; j++){
-				
+			for(var j=0; j<nextTrain.sections.length; j++){	
 		    	if(nextTrain.sections[j].mode != "walking")
 		    	{
 		    		var _date = '' + nextTrain.sections[j].departure_date_time;
 		    		var _dateTheorique = '' + nextTrain.sections[j].base_departure_date_time;
+					var _alert = nextTrain.sections[j].display_informations.links;
 					
-					_date = _date.substring(_date.lastIndexOf(" ")+1);
+					// on récupère l'id de la disruptionMessage
+					if(_alert[0].type == 'disruption')
+					{
+						var _idDisruption = _alert[0].id;
+					}
+					// on parcours les disruption jusqu'a retrouver la bonne
+					var _disruptionInfo = 0;
+					if(disruptions != 0)
+					{
+						_disruptionInfo = getDisruptionInfo(disruptions, _idDisruption);
+						console.log("\r\nDisruption info: ");
+						console.log(_disruptionInfo);
+					}
+					if(_disruptionInfo.amended_departure_time != undefined)
+					{
+						_date = _disruptionInfo.amended_departure_time.substring(_disruptionInfo.amended_departure_time.lastIndexOf(" ")+1);
+					}
+					else
+					{
+						_date = _date.substring(_date.lastIndexOf(" ")+1);
+					}
+					
 					_dateTheorique = _dateTheorique.substring(_date.lastIndexOf(" ")+1);
 					
 					var _delay = moment(_date).diff(moment(_dateTheorique),"minutes");
@@ -105,6 +135,7 @@ processTransports: function(data) {
 						dateTheorique : moment(_dateTheorique).format('llll'),
 						duration: nextTrain.sections[j].duration/60, // duration in minutes
 						delay: _delay,
+						disruptionInfo: _disruptionInfo,
 						state: nextTrain.status
 					});
 				}
@@ -120,6 +151,34 @@ processTransports: function(data) {
 	});
 },
 
+/* getDisruptionInfo()
+	* Retrieve informations from disruption and departure time
+	* argument disruption - list of all disruptions
+	* argument idSearched - Id which we want info
+*/
+getDisruptionInfo: function(disruptions, idSearched) {
+	// Searching our disruption ID in all disruption
+	for (var i=0; i<disruptions.length; i++) 
+	{
+		if(disruptions[i].disruption_id == idSearched)
+		{
+			var _disruptionInfo = {};
+			// Searching our depart stop in List of impacted stops
+			var _impactedStops = disruptions[i].impacted_objects[0].impacted_stops;
+			for (var j=0; j<_impactedStops.length; j++)
+			{
+				if(_impactedStops[j].stop_point.id == this.config.departUIC)
+				{
+					_disruptionInfo['amended_departure_time'] = _impactedStops[j].amended_departure_time;
+					_disruptionInfo['cause'] = _impactedStops[j].cause;
+					
+					return _disruptionInfo;
+				}
+			}
+		}
+	}
+	
+},
 
 /* scheduleUpdate()
 	* Schedule next update.
