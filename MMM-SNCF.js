@@ -72,14 +72,14 @@ Module.register("MMM-SNCF", {
             
             content = content + "<span class='trainname'>" +transports.duration +" mn</span>";
 			
-            if(transports.date == transports.dateTheorique )
+            if(transports.delay > 0 )
             {
                 content = content + "&nbsp;&nbsp;&nbsp;&nbsp;" + transports.date;
 			}
             else
             {
                 content = content + "&nbsp;&nbsp;&nbsp;&nbsp;" + "<span class='oldHoraire'>" + transports.dateTheorique + "</span>";
-                content = content + "&nbsp;&nbsp;&nbsp;&nbsp;" + transports.date
+                content = content + "&nbsp;&nbsp;&nbsp;&nbsp;" + transports.disruptionInfo.amended_departure_time;
 			}
             transportNameCell.innerHTML = content;
             transportNameCell.className = "align-right bright";
