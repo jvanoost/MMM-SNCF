@@ -154,7 +154,8 @@ processTransports: function(data) {
 							if(disruptions[i].disruption_id == _idDisruption)
 							{
 								// Searching our depart stop in List of impacted stops
-								//var _impactedStops = disruptions[i].impacted_objects[0].impacted_stops;
+								var _impactedStops = disruptions[i].impacted_objects[0].impacted_stops;
+								console.log(_impactedStops);
 								//for (var j=0; j<_impactedStops.length; j++)
 								//{
 								//	if(_impactedStops[j].stop_point.id == this.config.departUIC)
