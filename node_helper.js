@@ -136,9 +136,12 @@ processTransports: function(data) {
 					
 					// on récupère l'id de la disruptionMessage
 					var _idDisruption = 0;
-					if(_alert[0].type == 'disruption')
+					if(alert.length > 0)
 					{
-						_idDisruption = _alert[0].id;
+						if(_alert[0].type == 'disruption')
+						{
+							_idDisruption = _alert[0].id;
+						}
 					}
 					console.log("id disruption : "+_idDisruption);
 					// on parcours les disruption jusqu'a retrouver la bonne
