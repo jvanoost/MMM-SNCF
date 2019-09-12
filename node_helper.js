@@ -135,9 +135,10 @@ processTransports: function(data) {
 					var _alert = nextTrain.sections[j].display_informations.links;
 					
 					// on récupère l'id de la disruptionMessage
+					var _idDisruption = 0;
 					if(_alert[0].type == 'disruption')
 					{
-						var _idDisruption = _alert[0].id;
+						_idDisruption = _alert[0].id;
 					}
 					// on parcours les disruption jusqu'a retrouver la bonne
 					var _disruptionInfo = 0;
@@ -147,7 +148,7 @@ processTransports: function(data) {
 						// Searching our disruption ID in all disruption
 						for (var i=0; i<disruptions.length; i++) 
 						{
-							if(disruptions[i].disruption_id == idSearched)
+							if(disruptions[i].disruption_id == _idDisruption)
 							{
 								// Searching our depart stop in List of impacted stops
 								var _impactedStops = disruptions[i].impacted_objects[0].impacted_stops;
