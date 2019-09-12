@@ -143,7 +143,7 @@ processTransports: function(data) {
 					console.log("id disruption : "+_idDisruption);
 					// on parcours les disruption jusqu'a retrouver la bonne
 					var _disruptionInfo = 0;
-					if(disruptions !== 0)
+					if(disruptions.length > 0)
 					{
 						_disruptionInfo = {};
 						//console.log(disruptions);
