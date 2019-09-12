@@ -183,7 +183,14 @@ processTransports: function(data) {
 					_dateTheorique = _dateTheorique.substring(_date.lastIndexOf(" ")+1);
 					
 					var _delay = moment(_date).diff(moment(_dateTheorique),"minutes");
-					console.log("Delay : "+_delay);
+					
+					console.log("name:  "+nextTrain.sections[j].display_informations.headsign);
+					console.log("date:  "+moment(_date).format('llll'));
+					console.log("dateTheorique :  "+moment(_dateTheorique).format('llll'));
+					console.log("duration:  "+nextTrain.sections[j].duration/60); // duration in minutes
+					console.log("delay:  "+_delay);
+					console.log("disruptionInfo:  "+_disruptionInfo);
+					console.log("state: "+nextTrain.status);
 					
 					this.transports.push({
 						name: nextTrain.sections[j].display_informations.headsign,
