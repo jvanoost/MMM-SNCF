@@ -140,30 +140,31 @@ processTransports: function(data) {
 					{
 						_idDisruption = _alert[0].id;
 					}
+					console.log("id disruption : "+_idDisruption);
 					// on parcours les disruption jusqu'a retrouver la bonne
 					var _disruptionInfo = 0;
-					if(disruptions != 0)
+					if(disruptions !== 0)
 					{
 						_disruptionInfo = {};
 						console.log(disruptions);
-						console.log("id disruption : "+_idDisruption);
+						
 						// Searching our disruption ID in all disruption
 						for (var i=0; i<disruptions.length; i++) 
 						{
 							if(disruptions[i].disruption_id == _idDisruption)
 							{
 								// Searching our depart stop in List of impacted stops
-								var _impactedStops = disruptions[i].impacted_objects[0].impacted_stops;
-								for (var j=0; j<_impactedStops.length; j++)
-								{
-									if(_impactedStops[j].stop_point.id == this.config.departUIC)
-									{
-										_disruptionInfo['amended_departure_time'] = _impactedStops[j].amended_departure_time;
-										_disruptionInfo['cause'] = _impactedStops[j].cause;
-										
-										//return _disruptionInfo;
-									}
-								}
+								//var _impactedStops = disruptions[i].impacted_objects[0].impacted_stops;
+								//for (var j=0; j<_impactedStops.length; j++)
+								//{
+								//	if(_impactedStops[j].stop_point.id == this.config.departUIC)
+								//	{
+								//		_disruptionInfo['amended_departure_time'] = _impactedStops[j].amended_departure_time;
+								//		_disruptionInfo['cause'] = _impactedStops[j].cause;
+								//		
+								//		//return _disruptionInfo;
+								//	}
+								//}
 							}
 						}
 						console.log("\r\nDisruption info: ");
