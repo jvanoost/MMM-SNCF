@@ -176,14 +176,15 @@ processTransports: function(data) {
 					}
 					if(_disruptionInfo !== 0)
 					{
-						_date = _disruptionInfo.amended_departure_time.substring(_disruptionInfo.amended_departure_time.lastIndexOf(" ")+1);
+						_date = _disruptionInfo.amended_departure_time;
+						_date = _date.substring(_date.lastIndexOf(" ")+1);
 					}
 					else
 					{
 						_date = _date.substring(_date.lastIndexOf(" ")+1);
 					}
 					
-					_dateTheorique = _dateTheorique.substring(_date.lastIndexOf(" ")+1);
+					_dateTheorique = _dateTheorique.substring(_dateTheorique.lastIndexOf(" ")+1);
 					
 					var _delay = moment(_date).diff(moment(_dateTheorique),"minutes");
 					
