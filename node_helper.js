@@ -164,6 +164,8 @@ processTransports: function(data) {
 									if(_impactedStops[l].stop_point.id == this.config.departUIC)
 									{
 										_disruptionInfo['amended_departure_time'] = _date.substring(0,9) + _impactedStops[l].amended_departure_time;
+										_disruptionInfo['amended_departure_time'] = _disruptionInfo['amended_departure_time'].substring(_disruptionInfo['amended_departure_time'].lastIndexOf(" ")+1);
+										_disruptionInfo['amended_departure_time'] = moment(_disruptionInfo['amended_departure_time']).format('llll');
 										_disruptionInfo['cause'] = _impactedStops[l].cause;
 										
 										//return _disruptionInfo;
