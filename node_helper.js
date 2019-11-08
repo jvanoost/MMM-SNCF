@@ -203,7 +203,7 @@ processTransports: function(data) {
 					//console.log("state: "+nextTrain.status);
 					
 					this.transports.push({
-						name: nextTrain.sections[j].display_informations.headsign,
+						name: (nextTrain.sections[j].display_informations!==undefined)?nextTrain.sections[j].display_informations.headsign:"No headsign",
 						date: moment(_date).format('llll'),
 						dateTheorique : moment(_dateTheorique).format('llll'),
 						duration: nextTrain.sections[j].duration/60, // duration in minutes
