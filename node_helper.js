@@ -132,7 +132,11 @@ processTransports: function(data) {
 		    	{
 		    		var _date = '' + nextTrain.sections[j].departure_date_time;
 		    		var _dateTheorique = '' + nextTrain.sections[j].base_departure_date_time;
-					var _alert = nextTrain.sections[j].display_informations.links;
+					var _alert = "";
+					if(nextTrain.sections[j].display_informations !== undefined)
+					{
+						nextTrain.sections[j].display_informations.links;
+					}
 					
 					// on récupère l'id de la disruptionMessage
 					var _idDisruption = 0;
