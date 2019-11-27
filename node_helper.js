@@ -180,7 +180,7 @@ processTransports: function(data) {
 						console.log("\r\nDisruption info: ");
 						console.log(_disruptionInfo);
 					}
-					if(_disruptionInfo !== 0)
+					if(_disruptionInfo !== 0 && _disruptionInfo.hasOwnProperty("amended_departure_time"))
 					{
 						_date = _disruptionInfo.amended_departure_time;
 						_date = _date.substring(_date.lastIndexOf(" ")+1);
