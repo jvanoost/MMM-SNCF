@@ -40,23 +40,15 @@ The following properties can be configured:
 | Option           | Description
 | ---------------- | -----------
 | `updateInterval` | 
-| `animationSpeed` | 
+| `animationSpeed` | Speed of the update animation. (Milliseconds) <br><br> **Possible values:**`0` - `5000` <br> **Default value:** `2000` (2 seconds)
 | `debugging` | 
 | `retryDelay` | 
 | `initialLoadDelay` | 
-| `apiKey` | 
-| `departUIC` | 
-| `arriveeUIC` | 
+| `apiKey` | The [SNCF](https://www.digital.sncf.com/startup/api) API key, which can be obtained by creating an SNCF account. <br><br> This value is **REQUIRED**
+
+| `departUIC` | You need to find your train station and find the **UIC** of the train station (*not the uic7 column, the UIC*). You can look [here](https://ressources.data.sncf.com/explore/dataset/referentiel-gares-voyageurs)
+| `arriveeUIC` | You need to find your train station and find the **UIC** of the train station (*not the uic7 column, the UIC*). You can look [here](https://ressources.data.sncf.com/explore/dataset/referentiel-gares-voyageurs)
 | `trainsdisplayed` |
-
-## Example
-
-1- You need to find your train station and find the **UIC** of the train station (*not the uic7 column, the UIC*). You can look [here](https://ressources.data.sncf.com/explore/dataset/referentiel-gares-voyageurs)
-
-2- Specify missing values in the configuration. You need the UIC of your train station and the UIC of the arrival station.
-
-3- Don't forget to add login/password, which are the credentials to access the API. You can try them in your browser by trying to open the url [https://api.sncf.com/v1](https://api.sncf.com/v1)
-
 
 ## Further information and support
 
