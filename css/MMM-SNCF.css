@@ -1,29 +1,38 @@
-.trainname
-{
+header {
+    color: #ffffff;
+    font-weight: bold;
+    text-align: center;
+}
+
+.trainName {
     border: 2px solid #ffffff;
-    
     background: #ffffff;
-    color:black;
+    color: black;
     border-radius: 5px;
 }
 
-.transilien
-{
-    line-height:1.5em;
+.trainDuration {
+    color: #ffffff;
+    font-weight: bold;
 }
 
-.state
-{
-    color:yellow !important;
+.transilien {
+    line-height: 1.5em;
 }
 
-.oldHoraire
-{
+.tr-transilien {
+    text-align: right;
+}
+
+.state {
+    color: yellow !important;
+}
+
+.oldHoraire {
     text-decoration: line-through;
     font-size: 0.8em;
 }
 
-.disruptionCause
-{
-    font-size:1em;
+.disruptionCause {
+    font-size: 1em;
 }
