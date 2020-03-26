@@ -45,7 +45,6 @@ The following properties can be configured:
 | `retryDelay` | 
 | `initialLoadDelay` | 
 | `apiKey` | The [SNCF](https://www.digital.sncf.com/startup/api) API key, which can be obtained by creating an SNCF account. <br><br> This value is **REQUIRED**
-
 | `departUIC` | You need to find your train station and find the **UIC** of the train station (*not the uic7 column, the UIC*). You can look [here](https://ressources.data.sncf.com/explore/dataset/referentiel-gares-voyageurs)
 | `arriveeUIC` | You need to find your train station and find the **UIC** of the train station (*not the uic7 column, the UIC*). You can look [here](https://ressources.data.sncf.com/explore/dataset/referentiel-gares-voyageurs)
 | `trainsdisplayed` |
