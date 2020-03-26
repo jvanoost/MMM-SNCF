@@ -22,7 +22,6 @@ To use this module, add it to the modules array in the `config/config.js` file:
     config:{
         departUIC: "stop_area:OCE:SA:87286005",
         arriveeUIC: "stop_area:OCE:SA:87286583",
-        trainsdisplayed: '5',
         apiKey: "", // You must add your API key
     }
 },
