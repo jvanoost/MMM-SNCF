@@ -1,10 +1,14 @@
 # MMM-SNCF
 
-MMM-SNCF was developped from the MMM-Transilien module (https://github.com/lgmorand/MMM-Transilien)
+MMM-SNCF was developped from the ![MMM-Transilien](https://github.com/lgmorand/MMM-Transilien) module.
 
 ## Installation
 
 Clone the git in the /modules folder of Magic Mirror and run the "npm install" command which will installed the required node modules
+
+## Example
+
+![Module SNCF](https://github.com/abrochet/MMM-SNCF/blob/master/screenshots/transilien.png)
 
 ## Using the module
 
