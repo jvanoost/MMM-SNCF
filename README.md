@@ -34,15 +34,15 @@ The following properties can be configured:
 
 | Option           | Description
 | ---------------- | -----------
-| `updateInterval` | 
+| `updateInterval` | How often does the trains have to change? (Milliseconds) <br><br> **Possible values:** `1000` - `86400000` <br> **Default value:** `60000` (60 seconds)
 | `animationSpeed` | Speed of the update animation. (Milliseconds) <br><br> **Possible values:**`0` - `5000` <br> **Default value:** `2000` (2 seconds)
-| `debugging` | 
+| `debugging` | Show logs in console. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `false`
 | `retryDelay` | 
-| `initialLoadDelay` | 
+| `initialLoadDelay` | The initial delay before loading. If you have multiple modules that use the same API key, you might want to delay one of the requests. (Milliseconds) <br><br> **Possible values:** `1000` - `5000` <br> **Default value:** `0`
 | `apiKey` | The [SNCF](https://www.digital.sncf.com/startup/api) API key, which can be obtained by creating an SNCF account. <br><br> This value is **REQUIRED**
-| `departUIC` | You need to find your train station and find the **UIC** of the train station (*not the uic7 column, the UIC*). You can look [here](https://ressources.data.sncf.com/explore/dataset/referentiel-gares-voyageurs)
-| `arriveeUIC` | You need to find your train station and find the **UIC** of the train station (*not the uic7 column, the UIC*). You can look [here](https://ressources.data.sncf.com/explore/dataset/referentiel-gares-voyageurs)
-| `trainsdisplayed` |
+| `departUIC` | You need to find your train station and find the [**UIC**](https://ressources.data.sncf.com/explore/dataset/referentiel-gares-voyageurs) of the train station (*not the uic7 column, the UIC*).<br><br> This value is **REQUIRED**
+| `arriveeUIC` | You need to find your train station and find the [**UIC**](https://ressources.data.sncf.com/explore/dataset/referentiel-gares-voyageurs) of the train station (*not the uic7 column, the UIC*).<br><br> This value is **REQUIRED**
+| `trainsDisplayed` | Number of results to display.<br><br> **Default value:** `3` 
 
 ## Further information and support
 
