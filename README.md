@@ -2,15 +2,6 @@
 
 MMM-SNCF was developped from the MMM-Transilien module (https://github.com/lgmorand/MMM-Transilien)
 
-## SNCF OpenData
-
-A law was voted to force public companies to open some of their data to the public.
-
-**VERY IMPORTANT**
-They sucks at SNCF and they force you to ask for a key to use the API. For that, you need to ask them a key by email (see link above), once you write a mail, you MAY receive a key after several days or weeks (because they really really suck...). It may change in the future but for now they clearly do that to prevent user to easily access to their API.
-
-[Ask for a key](https://www.digital.sncf.com/startup/api)
-
 ## Installation
 
 Clone the git in the /modules folder of Magic Mirror and run the "npm install" command which will installed the required node modules
