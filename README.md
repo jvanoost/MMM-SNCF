@@ -37,7 +37,9 @@ The following properties can be configured:
 | `updateInterval` | How often does the trains have to change? (Milliseconds) <br><br> **Possible values:** `1000` - `86400000` <br> **Default value:** `60000` (60 seconds)
 | `animationSpeed` | Speed of the update animation. (Milliseconds) <br><br> **Possible values:**`0` - `5000` <br> **Default value:** `2000` (2 seconds)
 | `debugging` | Show logs in console. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `false`
-| `retryDelay` | 
+| `retryDelay` | The delay before retrying after a request failure. (Milliseconds)
+Possible values: 1000 - 60000
+Default value: 10000
 | `initialLoadDelay` | The initial delay before loading. If you have multiple modules that use the same API key, you might want to delay one of the requests. (Milliseconds) <br><br> **Possible values:** `1000` - `5000` <br> **Default value:** `0`
 | `apiKey` | The [SNCF](https://www.digital.sncf.com/startup/api) API key, which can be obtained by creating an SNCF account. <br><br> This value is **REQUIRED**
 | `departUIC` | You need to find your train station and find the [**UIC**](https://ressources.data.sncf.com/explore/dataset/referentiel-gares-voyageurs) of the train station (*not the uic7 column, the UIC*).<br><br> This value is **REQUIRED**
