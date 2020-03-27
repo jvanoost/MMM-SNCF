@@ -42,7 +42,7 @@ The following properties can be configured:
 | `apiKey` | The [SNCF](https://www.digital.sncf.com/startup/api) API key, which can be obtained by creating an SNCF account. <br><br> This value is **REQUIRED**
 | `departureStationUIC` | You need to find your train station and find the [**UIC**](https://ressources.data.sncf.com/explore/dataset/referentiel-gares-voyageurs) of the train station (*not the uic7 column, the UIC*).<br><br> This value is **REQUIRED**
 | `arrivalStationUIC` | You need to find your train station and find the [**UIC**](https://ressources.data.sncf.com/explore/dataset/referentiel-gares-voyageurs) of the train station (*not the uic7 column, the UIC*).<br><br> This value is **REQUIRED**
-| `trainsDisplayed` | Number of results to display.<br><br> **Default value:** `3` 
+| `count` | Number of results per page. By default, on the results for one day. <br><br> **Default value:** `1` 
 | `displayName` | Display train name. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `true`
 | `displayDuration` | Display journey time. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `true`
 
