@@ -120,30 +120,25 @@ module.exports = NodeHelper.create({
                                 _idDisruption = _alert[0].id;
                             }
                         }
-
-                        console.log("id disruption : " + _idDisruption);
-
+						
                         // on parcours les disruption jusqu'a retrouver la bonne
                         var _disruptionInfo = 0;
 
                         if (disruptions.length > 0) {
                             _disruptionInfo = {};
-                            //console.log(disruptions);
-
+							
                             // Searching our disruption ID in all disruption
                             for (var k = 0; k < disruptions.length; k++) {
                                 if (disruptions[k].disruption_id == _idDisruption) {
                                     // Searching our depart stop in List of impacted stops
                                     var _impactedStops = disruptions[k].impacted_objects[0].impacted_stops;
-                                    //console.log(_impactedStops);
+                              
                                     for (var l = 0; l < _impactedStops.length; l++) {
                                         if (_impactedStops[l].stop_point.id == this.config.departureStationUIC) {
                                             _disruptionInfo['amended_departure_time'] = _date.substring(0, 9) + _impactedStops[l].amended_departure_time;
                                             _disruptionInfo['amended_departure_time'] = _disruptionInfo['amended_departure_time'].substring(_disruptionInfo['amended_departure_time'].lastIndexOf(" ") + 1);
                                             _disruptionInfo['amended_departure_time'] = moment(_disruptionInfo['amended_departure_time']).format('llll');
                                             _disruptionInfo['cause'] = _impactedStops[l].cause;
-
-                                            //return _disruptionInfo;
                                         }
                                     }
                                 }
@@ -160,19 +155,9 @@ module.exports = NodeHelper.create({
                             _date = _date.substring(_date.lastIndexOf(" ") + 1);
                         }
 
-                        console.log("DATE : " + _dateTheorique);
-
                         _dateTheorique = _dateTheorique.substring(_dateTheorique.lastIndexOf(" ") + 1);
 
                         var _delay = moment(_date).diff(moment(_dateTheorique), "minutes");
-
-                        //console.log("name:  "+nextTrain.sections[j].display_informations.headsign);
-                        //console.log("date:  "+moment(_date).format('llll'));
-                        //console.log("dateTheorique :  "+moment(_dateTheorique).format('llll'));
-                        //console.log("duration:  "+nextTrain.sections[j].duration/60); // duration in minutes
-                        //console.log("delay:  "+_delay);
-                        //console.log("disruptionInfo:  "+_disruptionInfo);
-                        //console.log("state: "+nextTrain.status);
 
                         this.transports.push({
                             name: (nextTrain.sections[j].display_informations !== undefined) ? nextTrain.sections[j].display_informations.headsign : "ND",
