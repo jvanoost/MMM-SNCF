@@ -43,6 +43,8 @@ The following properties can be configured:
 | `departureStationUIC` | You need to find your train station and find the [**UIC**](https://ressources.data.sncf.com/explore/dataset/referentiel-gares-voyageurs) of the train station (*not the uic7 column, the UIC*).<br><br> This value is **REQUIRED**
 | `arrivalStationUIC` | You need to find your train station and find the [**UIC**](https://ressources.data.sncf.com/explore/dataset/referentiel-gares-voyageurs) of the train station (*not the uic7 column, the UIC*).<br><br> This value is **REQUIRED**
 | `trainsDisplayed` | Number of results to display.<br><br> **Default value:** `3` 
+| `displayName` | Display train name. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `true`
+| `displayDuration` | Display journey time. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `true`
 
 ## Further information and support
 

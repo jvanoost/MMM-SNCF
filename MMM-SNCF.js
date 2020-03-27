@@ -17,6 +17,8 @@ Module.register("MMM-SNCF", {
         retryDelay: 1 * 10 * 1000,
         initialLoadDelay: 0, // start delay seconds.
         trainsDisplayed: 3, // number of trains displayed
+        displayDuration: true,
+        displayName: true,
     },
 
     // Define required scripts.
@@ -84,13 +86,15 @@ Module.register("MMM-SNCF", {
 
             row.appendChild(delayCell);
 
-            var nameCell = document.createElement("td");
+            if (this.config.displayName) {
+                var nameCell = document.createElement("td");
 
-            content = "<span class='trainName'>" + transport.name + "</span> &nbsp;&nbsp;";
+                content = "<span class='trainName'>" + transport.name + "</span> &nbsp;&nbsp;";
 
-            nameCell.innerHTML = content;
+                nameCell.innerHTML = content;
 
-            row.appendChild(nameCell);
+                row.appendChild(nameCell);
+            }
 
             var dateCell = document.createElement("td");
 
@@ -110,13 +114,15 @@ Module.register("MMM-SNCF", {
 
             row.appendChild(dateCell);
 
-            var durationCell = document.createElement("td");
+            if (this.config.displayDuration) {
+                var durationCell = document.createElement("td");
 
-            content = "<span class='trainDuration'>" + self.timeFormatting(transport.duration) + "</span> &nbsp;&nbsp;";
+                content = "<span class='trainDuration'>" + self.timeFormatting(transport.duration) + "</span> &nbsp;&nbsp;";
 
-            durationCell.innerHTML = content;
+                durationCell.innerHTML = content;
 
-            row.appendChild(durationCell);
+                row.appendChild(durationCell);
+            }
 
             table.appendChild(row);
         }
