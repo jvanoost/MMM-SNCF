@@ -93,7 +93,7 @@ module.exports = NodeHelper.create({
             disruptions = 0;
         }
 
-        var count = this.config.trainsDisplayed;
+        var count = this.config.count;
 
         if (responseInJson.length < count) {
             count = responseInJson.length;
@@ -101,6 +101,7 @@ module.exports = NodeHelper.create({
 
         for (var i = 0; i < count; i++) {
             var nextTrain = responseInJson[i];
+
             if (nextTrain !== undefined) {
                 for (var j = 0; j < nextTrain.sections.length; j++) {
                     if (nextTrain.sections[j].mode != "walking") {
@@ -119,9 +120,12 @@ module.exports = NodeHelper.create({
                                 _idDisruption = _alert[0].id;
                             }
                         }
+
                         console.log("id disruption : " + _idDisruption);
+
                         // on parcours les disruption jusqu'a retrouver la bonne
                         var _disruptionInfo = 0;
+
                         if (disruptions.length > 0) {
                             _disruptionInfo = {};
                             //console.log(disruptions);
@@ -147,6 +151,7 @@ module.exports = NodeHelper.create({
                             console.log("\r\nDisruption info: ");
                             console.log(_disruptionInfo);
                         }
+
                         if (_disruptionInfo !== 0 && _disruptionInfo.hasOwnProperty("amended_departure_time")) {
                             _date = _disruptionInfo.amended_departure_time;
                             _date = _date.substring(_date.lastIndexOf(" ") + 1);
@@ -168,7 +173,7 @@ module.exports = NodeHelper.create({
                         //console.log("state: "+nextTrain.status);
 
                         this.transports.push({
-                            name: (nextTrain.sections[j].display_informations !== undefined) ? nextTrain.sections[j].display_informations.headsign : "No headsign",
+                            name: (nextTrain.sections[j].display_informations !== undefined) ? nextTrain.sections[j].display_informations.headsign : "",
                             date: moment(_date).format('llll'),
                             dateTheorique: moment(_dateTheorique).format('llll'),
                             duration: nextTrain.sections[j].duration / 60, // duration in minutes
