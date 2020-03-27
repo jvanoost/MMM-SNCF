@@ -16,9 +16,10 @@ Module.register("MMM-SNCF", {
         debugging: false,
         retryDelay: 1 * 10 * 1000,
         initialLoadDelay: 0, // start delay seconds.
-        count: 1, 
+        numberDays: 1,
         displayDuration: true,
         displayName: true,
+        displayHeaders: true,
     },
 
     // Define required scripts.
@@ -52,6 +53,13 @@ Module.register("MMM-SNCF", {
         var table = document.createElement("table");
         table.className = "small transilien";
 
+        var addStateHeader = false;
+        var addDelayHeader = false;
+
+        var rowHeader = document.createElement("tr");
+        rowHeader.className = "small th-transilien";
+        table.appendChild(rowHeader);
+
         // adding next schedules
         for (var t in this.transports) {
             var transport = this.transports[t];
@@ -66,9 +74,11 @@ Module.register("MMM-SNCF", {
             var stateCell = document.createElement("td");
 
             if (transport.state == "NO_SERVICE") {
+                addStateHeader = true;
                 content = "<span class='state'><i class='fa fa-ban aria-hidden='true'></i> Supprimé</span> &nbsp;&nbsp;";
             }
             else if (transport.state != "") {
+                addStateHeader = true;
                 content = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i> " + transport.state + "</span>  &nbsp;&nbsp;";
             }
 
@@ -79,6 +89,7 @@ Module.register("MMM-SNCF", {
             var delayCell = document.createElement("td");
 
             if (transport.delay != "" && transport.delay != null) {
+                addDelayHeader = true;
                 content = "<span class='state'><i class='fa fa-clock-o aria-hidden='true'></i> " + transport.delay + "</span> &nbsp;&nbsp;";
             }
 
@@ -89,9 +100,7 @@ Module.register("MMM-SNCF", {
             if (this.config.displayName) {
                 var nameCell = document.createElement("td");
 
-                if (transport.name != "No headsign") {
-                    content = "<span class='trainName'>" + transport.name + "</span> &nbsp;&nbsp;";
-                }
+                content = "<span class='trainName'>" + transport.name + "</span> &nbsp;&nbsp;";
 
                 nameCell.innerHTML = content;
 
@@ -127,6 +136,36 @@ Module.register("MMM-SNCF", {
             }
 
             table.appendChild(row);
+        }
+
+        if (this.config.displayHeaders) {
+            var rowHeader = table.childNodes[0];
+
+            var h1 = document.createElement("th");
+            h1.innerHTML = addStateHeader ? "Etat" : "";
+            rowHeader.appendChild(h1);
+
+            var h2 = document.createElement("th");
+            h2.innerHTML = addDelayHeader ? "Retard" : "";
+            rowHeader.appendChild(h2);
+
+            if (this.config.displayName) {
+                var h3 = document.createElement("th");
+                h3.innerHTML = "N°";
+                rowHeader.appendChild(h3);
+            }
+
+            var h4 = document.createElement("th");
+            h4.innerHTML = "Départ";
+            rowHeader.appendChild(h4);
+
+            if (this.config.displayDuration) {
+                var h5 = document.createElement("th");
+                h5.innerHTML = "Durée";
+                rowHeader.appendChild(h5);
+            }
+
+            table.childNodes[0] = rowHeader;
         }
 
         return table;
