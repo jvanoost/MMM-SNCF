@@ -142,26 +142,26 @@ Module.register("MMM-SNCF", {
             var rowHeader = table.childNodes[0];
 
             var h1 = document.createElement("th");
-            h1.innerHTML = addStateHeader ? "Etat" : "";
+            h1.innerHTML = addStateHeader ? "Etat :" : "";
             rowHeader.appendChild(h1);
 
             var h2 = document.createElement("th");
-            h2.innerHTML = addDelayHeader ? "Retard" : "";
+            h2.innerHTML = addDelayHeader ? "Retard :" : "";
             rowHeader.appendChild(h2);
 
             if (this.config.displayName) {
                 var h3 = document.createElement("th");
-                h3.innerHTML = "N°";
+                h3.innerHTML = "N° :";
                 rowHeader.appendChild(h3);
             }
 
             var h4 = document.createElement("th");
-            h4.innerHTML = "Départ";
+            h4.innerHTML = "Départ :";
             rowHeader.appendChild(h4);
 
             if (this.config.displayDuration) {
                 var h5 = document.createElement("th");
-                h5.innerHTML = "Durée";
+                h5.innerHTML = "Durée :";
                 rowHeader.appendChild(h5);
             }
 
