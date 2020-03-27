@@ -24,6 +24,11 @@ header {
     text-align: right;
 }
 
+.th-transilien {
+    text-align: center;
+    font-style: italic;
+}
+
 .state {
     color: yellow !important;
 }
