@@ -20,7 +20,7 @@ module.exports = NodeHelper.create({
 		* Calls processTransports on succesfull response.
 	*/
     updateTimetable: function () {
-        var url = "https://api.sncf.com/v1/coverage/sncf/journeys?from=" + this.config.departureStationUIC + "&to=" + this.config.arrivalStationUIC + "&datetime=" + moment().toISOString() + "&count=" + this.config.count;
+        var url = "https://api.sncf.com/v1/coverage/sncf/journeys?from=" + this.config.departureStationUIC + "&to=" + this.config.arrivalStationUIC + "&datetime=" + moment().toISOString() + "&count=" + this.config.numberDays;
 
         if (this.config.debugging) console.log(url);
 
@@ -93,7 +93,7 @@ module.exports = NodeHelper.create({
             disruptions = 0;
         }
 
-        var count = this.config.count;
+        var count = this.config.numberDays;
 
         if (responseInJson.length < count) {
             count = responseInJson.length;
@@ -160,6 +160,8 @@ module.exports = NodeHelper.create({
                             _date = _date.substring(_date.lastIndexOf(" ") + 1);
                         }
 
+                        console.log("DATE : " + _dateTheorique);
+
                         _dateTheorique = _dateTheorique.substring(_dateTheorique.lastIndexOf(" ") + 1);
 
                         var _delay = moment(_date).diff(moment(_dateTheorique), "minutes");
@@ -173,7 +175,7 @@ module.exports = NodeHelper.create({
                         //console.log("state: "+nextTrain.status);
 
                         this.transports.push({
-                            name: (nextTrain.sections[j].display_informations !== undefined) ? nextTrain.sections[j].display_informations.headsign : "",
+                            name: (nextTrain.sections[j].display_informations !== undefined) ? nextTrain.sections[j].display_informations.headsign : "ND",
                             date: moment(_date).format('llll'),
                             dateTheorique: moment(_dateTheorique).format('llll'),
                             duration: nextTrain.sections[j].duration / 60, // duration in minutes
@@ -205,7 +207,9 @@ module.exports = NodeHelper.create({
         }
 
         var self = this;
+
         clearTimeout(this.updateTimer);
+
         this.updateTimer = setInterval(function () {
             self.updateTimetable();
         }, nextLoad);
@@ -218,6 +222,7 @@ module.exports = NodeHelper.create({
         }
 
         const self = this;
+
         if (notification === 'CONFIG' && this.started == false) {
             this.config = payload;
             this.started = true;
