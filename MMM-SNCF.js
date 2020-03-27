@@ -16,7 +16,7 @@ Module.register("MMM-SNCF", {
         debugging: false,
         retryDelay: 1 * 10 * 1000,
         initialLoadDelay: 0, // start delay seconds.
-        trainsDisplayed: 3, // number of trains displayed
+        count: 1, 
         displayDuration: true,
         displayName: true,
     },
