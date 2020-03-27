@@ -20,9 +20,9 @@ module.exports = NodeHelper.create({
 		* Calls processTransports on succesfull response.
 	*/
     updateTimetable: function () {
-        var url = "https://api.sncf.com/v1/coverage/sncf/journeys?from=" + this.config.departureStationUIC + "&to=" + this.config.arrivalStationUIC + "&datetime=" + moment().toISOString() + "&count=" + this.config.trainsDisplayed;
+        var url = "https://api.sncf.com/v1/coverage/sncf/journeys?from=" + this.config.departureStationUIC + "&to=" + this.config.arrivalStationUIC + "&datetime=" + moment().toISOString() + "&count=" + this.config.count;
 
-        if (this.config.debugging) console.log("\r\nURL loaded for SNCF: " + url);
+        if (this.config.debugging) console.log(url);
 
         var self = this;
         var retry = false;
