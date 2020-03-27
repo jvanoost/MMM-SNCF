@@ -89,7 +89,9 @@ Module.register("MMM-SNCF", {
             if (this.config.displayName) {
                 var nameCell = document.createElement("td");
 
-                content = "<span class='trainName'>" + transport.name + "</span> &nbsp;&nbsp;";
+                if (transport.name != "No headsign") {
+                    content = "<span class='trainName'>" + transport.name + "</span> &nbsp;&nbsp;";
+                }
 
                 nameCell.innerHTML = content;
 
