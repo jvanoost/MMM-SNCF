@@ -37,8 +37,10 @@ module.exports = NodeHelper.create({
         // from the documentation of the api, it'll be mandatory in next version of the api
         request.end(function (r) {
             if (r.error) {
-                console.log(self.name + " : " + r.error);
-                console.log(r.body); // affiche le corps de l'erreur
+                if (this.config.debugging) {
+                    console.log(self.name + " : " + r.error);
+                    console.log(r.body); // Display error
+                }
                 retry = true;
             } else {
                 self.processTransports(r.body);
@@ -80,7 +82,8 @@ module.exports = NodeHelper.create({
     */
     processTransports: function (data) {
         this.transports = [];
-        moment.locale(this.config.language);
+
+        moment.locale(this.config.lang);
 
         // we don't want to return too much trains
         responseInJson = data.journeys;
