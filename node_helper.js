@@ -120,19 +120,19 @@ module.exports = NodeHelper.create({
                                 _idDisruption = _alert[0].id;
                             }
                         }
-						
+
                         // on parcours les disruption jusqu'a retrouver la bonne
                         var _disruptionInfo = 0;
 
                         if (disruptions.length > 0) {
                             _disruptionInfo = {};
-							
+
                             // Searching our disruption ID in all disruption
                             for (var k = 0; k < disruptions.length; k++) {
                                 if (disruptions[k].disruption_id == _idDisruption) {
                                     // Searching our depart stop in List of impacted stops
                                     var _impactedStops = disruptions[k].impacted_objects[0].impacted_stops;
-                              
+
                                     for (var l = 0; l < _impactedStops.length; l++) {
                                         if (_impactedStops[l].stop_point.id == this.config.departureStationUIC) {
                                             _disruptionInfo['amended_departure_time'] = _date.substring(0, 9) + _impactedStops[l].amended_departure_time;
@@ -143,8 +143,6 @@ module.exports = NodeHelper.create({
                                     }
                                 }
                             }
-                            console.log("\r\nDisruption info: ");
-                            console.log(_disruptionInfo);
                         }
 
                         if (_disruptionInfo !== 0 && _disruptionInfo.hasOwnProperty("amended_departure_time")) {
@@ -155,9 +153,15 @@ module.exports = NodeHelper.create({
                             _date = _date.substring(_date.lastIndexOf(" ") + 1);
                         }
 
-                        _dateTheorique = _dateTheorique.substring(_dateTheorique.lastIndexOf(" ") + 1);
+                        if (this.config.debugging) console.log("Date théorique " + _dateTheorique);
 
-                        var _delay = moment(_date).diff(moment(_dateTheorique), "minutes");
+                        var _delay = 0;
+
+                        if (_dateTheorique != "undefined") {
+                            _dateTheorique = _dateTheorique.substring(_dateTheorique.lastIndexOf(" ") + 1);
+
+                            _delay = moment(_date).diff(moment(_dateTheorique), "minutes");
+                        }
 
                         this.transports.push({
                             name: (nextTrain.sections[j].display_informations !== undefined) ? nextTrain.sections[j].display_informations.headsign : "ND",
