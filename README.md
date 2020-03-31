@@ -1,45 +1,50 @@
 # MMM-SNCF
 
-MMM-SNCF was developped from the MMM-Transilien module (https://github.com/lgmorand/MMM-Transilien)
-
-## SNCF OpenData
-
-A law was voted to force public companies to open some of their data to the public.
-
-**VERY IMPORTANT**
-They sucks at SNCF and they force you to ask for a key to use the API. For that, you need to ask them a key by email (see link above), once you write a mail, you MAY receive a key after several days or weeks (because they really really suck...). It may change in the future but for now they clearly do that to prevent user to easily access to their API.
-
-[Ask for a key](https://www.digital.sncf.com/startup/api)
+MMM-SNCF was developped from the ![MMM-Transilien](https://github.com/lgmorand/MMM-Transilien) module.
 
 ## Installation
 
 Clone the git in the /modules folder of Magic Mirror and run the "npm install" command which will installed the required node modules
 
-## Configuration
+## Example
 
-1- You need to find your train station and find the **UIC** of the train station (*not the uic7 column, the UIC*). You can look [here](https://ressources.data.sncf.com/explore/dataset/referentiel-gares-voyageurs)
+![Module SNCF](https://github.com/abrochet/MMM-SNCF/blob/master/screenshots/transilien.png)
 
-2- Specify missing values in the configuration. You need the UIC of your train station and the UIC of the arrival station.
+## Using the module
+
+To use this module, add it to the modules array in the `config/config.js` file:
 
 ```javascript
 {
     module: 'MMM-SNCF',
     position: 'top_right',
-    header:'Lille-Flandres to Orchies',
+    header: 'Lille-Flandres to Orchies',
     config:{
-        departUIC:"stop_area:OCE:SA:87286005",
-        arriveeUIC:"stop_area:OCE:SA:87286583",
-        trainsdisplayed:'5',
-        language:"fr",
-        login:"", // You must add your API login and password
-        password:""
+        departureStationUIC: "stop_area:OCE:SA:87286005",
+        arrivalStationUIC: "stop_area:OCE:SA:87286583",
+        apiKey: "", // You must add your API key
     }
 },
 ```
 
-3- Don't forget to add login/password, which are the credentials to access the API. You can try them in your browser by trying to open the url [https://api.sncf.com/v1](https://api.sncf.com/v1)
+## Configuration options
 
+The following properties can be configured:
 
+| Option           | Description
+| ---------------- | -----------
+| `updateInterval` | How often do the trains have to change? (Milliseconds) <br><br> **Possible values:** `1000` - `86400000` <br> **Default value:** `60000` (60 seconds)
+| `animationSpeed` | Speed of the update animation. (Milliseconds) <br><br> **Possible values:**`0` - `5000` <br> **Default value:** `2000` (2 seconds)
+| `debugging` | Display logs in console. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `false`
+| `retryDelay` | The delay before retrying after a request failure. (Milliseconds) <br><br> **Possible values:** `1000` - `60000` <br> **Default value:** `10000`
+| `initialLoadDelay` | The initial delay before loading. If you have multiple modules that use the same API key, you might want to delay one of the requests. (Milliseconds) <br><br> **Possible values:** `1000` - `5000` <br> **Default value:** `0`
+| `apiKey` | The [SNCF](https://www.digital.sncf.com/startup/api) API key, which can be obtained by creating an SNCF account. <br><br> This value is **REQUIRED**
+| `departureStationUIC` | You need to find your train station and find the [**UIC**](https://ressources.data.sncf.com/explore/dataset/referentiel-gares-voyageurs) of the train station (*not the uic7 column, the UIC*).<br><br> This value is **REQUIRED**
+| `arrivalStationUIC` | You need to find your train station and find the [**UIC**](https://ressources.data.sncf.com/explore/dataset/referentiel-gares-voyageurs) of the train station (*not the uic7 column, the UIC*).<br><br> This value is **REQUIRED**
+| `numberDays` | Number of results per day. <br><br> **Default value:** `1` 
+| `displayName` | Display train name. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `true`
+| `displayDuration` | Display journey time. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `true`
+| `displayHeaders` | Display headers. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `true`
 
 ## Further information and support
 
