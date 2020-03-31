@@ -23,7 +23,6 @@ To use this module, add it to the modules array in the `config/config.js` file:
         departureStationUIC: "stop_area:OCE:SA:87286005",
         arrivalStationUIC: "stop_area:OCE:SA:87286583",
         apiKey: "", // You must add your API key
-        language: "fr",
     }
 },
 ```
