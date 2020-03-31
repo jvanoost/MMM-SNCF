@@ -14,6 +14,7 @@ Module.register("MMM-SNCF", {
         updateInterval: 1 * 60 * 1000, // Update 60 secs (API SNCF : 5 000 requêtes/jour)
         animationSpeed: 2000,
         debugging: false,
+        lang: config.language,
         retryDelay: 1 * 10 * 1000,
         initialLoadDelay: 0, // start delay seconds.
         numberDays: 1,
@@ -32,6 +33,26 @@ Module.register("MMM-SNCF", {
         Log.info("Starting module: " + this.name);
 
         if (this.config.debugging) Log.info("DEBUG mode activated");
+
+        /*** Backward compatibility of parameters ***/
+
+        if (this.config.departUIC != null) {
+            this.config.departureStationUIC = this.config.departUIC;
+        }
+
+        if (this.config.arriveeUIC != null) {
+            this.config.arrivalStationUIC = this.config.arriveeUIC;
+        }
+
+        if (this.config.trainsdisplayed != null) {
+            this.config.numberDays = this.config.trainsdisplayed;
+        }
+
+        if (this.config.login != null) {
+            this.config.apiKey = this.config.login;
+        }
+
+        /***************************************************/
 
         this.sendSocketNotification('CONFIG', this.config);
         this.loaded = false;
@@ -173,7 +194,6 @@ Module.register("MMM-SNCF", {
 
     // using the results retrieved for the API call
     socketNotificationReceived: function (notification, payload) {
-        Log.info("Notif:" + notification);
         if (notification === "TRAINS") {
             if (this.config.debugging) {
                 Log.info("Trains received");
