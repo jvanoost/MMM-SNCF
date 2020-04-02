@@ -10,17 +10,21 @@
     color: yellow;
 }
 
+.div-transilien { 
+  margin: auto; 
+  width: auto;
+}
+
 .table-transilien {
     table-layout: auto;
     width: auto;
     line-height: 1.5em;
-    border-collapse: separate;
+    border-collapse: collapse;
     border-spacing: 5px;
     margin: 5px auto;
 }
 
 .tr-heading, .th-transilien {
-    text-align: center;
     font-style: italic;
     font-weight: normal;
     font-size: 1em;
@@ -29,17 +33,13 @@
 
 .td-transilien {
     padding: 5px;
-    /*
-    border-radius: 6px;
-    border: 1px solid red;
-    */
 }
 
 .tr-transilien {
     text-align: right;
 }
 
-.td-date, td-peculiarity, td-c02 {
+.td-date, .td-peculiarity, .td-c02 {
     padding: 5px;
     text-align: right;
 }
