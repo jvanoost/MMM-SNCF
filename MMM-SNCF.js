@@ -73,6 +73,9 @@ Module.register("MMM-SNCF", {
             return wrapper;
         }
 
+	var container = document.createElement("div");
+	container.className = "div-transilien";
+
         var table = document.createElement("table");
         table.className = "small table-transilien";
 
@@ -216,7 +219,9 @@ Module.register("MMM-SNCF", {
             table.childNodes[0] = rowHeader;
         }
 
-        return table;
+	container.appendChild(table);
+
+        return container;
     },
 
     // using the results retrieved for the API call
