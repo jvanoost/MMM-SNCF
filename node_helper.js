@@ -107,8 +107,8 @@ module.exports = NodeHelper.create({
                     var ride = nextTrain.sections[j];
 
                     if (ride.mode != "walking") {
-                        var date = '' + ride.departure_date_time;
-                        var originalDate = '' + ride.base_departure_date_time;
+                        var date = ride.departure_date_time;
+                        var originalDate = ride.base_departure_date_time;
                         var alert = "";
 
                         // on récupère l'id de la disruptionMessage
@@ -154,12 +154,12 @@ module.exports = NodeHelper.create({
                             date = date.substring(date.lastIndexOf(" ") + 1);
                         }
 
-                        if (this.config.debugging) console.log("Date : " + date);
-                        if (this.config.debugging) console.log("Date d'origine : " + originalDate);
-
                         var delay = 0;
 
                         if (originalDate !== undefined && date !== undefined) {
+                            if (this.config.debugging) console.log("Date : " + date);
+                            if (this.config.debugging) console.log("Original date : " + originalDate);
+
                             originalDate = originalDate.substring(originalDate.lastIndexOf(" ") + 1);
 
                             delay = moment(date).diff(moment(originalDate), "minutes");
@@ -182,6 +182,8 @@ module.exports = NodeHelper.create({
                 }
             }
         }
+
+        if (this.config.debugging) console.log("Length transport : " + this.transports.length);
 
         this.loaded = true;
         this.sendSocketNotification("TRAINS", {
@@ -280,12 +282,12 @@ module.exports = NodeHelper.create({
             var id = null;
 
             if (to.embedded_type == "stop_area" && to.stop_area !== undefined) {
-                if (this.config.debugging) console.log("Code station : " + to.stop_area.id);
+                if (this.config.debugging) console.log("Station code : " + to.stop_area.id);
 
                 id = to.stop_area.id;
             }
             else if (to.embedded_type == "stop_point" && to.stop_point.stop_area !== undefined) {
-                if (this.config.debugging) console.log("Code station : " + to.stop_point.stop_area.id);
+                if (this.config.debugging) console.log("Station code : " + to.stop_point.stop_area.id);
 
                 id = to.stop_point.stop_area.id;
             }
