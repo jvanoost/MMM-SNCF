@@ -1,0 +1,14 @@
+{
+	"loading": "Chargement des prochains trains...",
+	"no_route": "Aucun trajet disponible !",
+	"waiting ": "Attente en gare",
+	"deleted": "Supprimé",
+	"delay": "Retard",
+	"on_time": "A l'heure",
+	"information": "Informations :",
+	"departure": "Départ :",
+	"duration": "Durée :",
+	"destination": "Destination :",
+	"peculiarities": "Particularités :",
+	"c02": "C02 émis :"
+}
