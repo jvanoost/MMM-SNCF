@@ -17,22 +17,21 @@
 
 .table-transilien {
     table-layout: auto;
-    width: auto;
+    width: auto !important;
     line-height: 1.5em;
     border-collapse: collapse;
-    border-spacing: 5px;
-    margin: 5px auto;
+    margin: auto;
 }
 
 .tr-heading, .th-transilien {
     font-style: italic;
-    font-weight: normal;
+    color: #A9A9A9;
     font-size: 1em;
     border-bottom: 1px solid #808080;
 }
 
 .td-transilien {
-    padding: 5px;
+    padding: 25px;
 }
 
 .tr-transilien {
@@ -40,17 +39,17 @@
 }
 
 .td-date, .td-peculiarity, .td-c02 {
-    padding: 5px;
+    padding: 25px;
     text-align: right;
 }
 
 .td-information, .td-destination {
-    padding: 5px;
+    padding: 25px;
     text-align: center;
 }
 
 .td-duration {
-    padding: 5px;
+    padding: 25px;
     color: #ffffff;
     font-weight: bold;
     text-align: right;
@@ -86,6 +85,6 @@
 }
 
 .END_JOURNEY td {
-    padding: 5px;
+    padding: 25px;
     border-bottom: 1px solid #808080;
 }
