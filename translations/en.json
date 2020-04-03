@@ -1,0 +1,14 @@
+{
+	"loading": "Loading next trains ...",
+	"no_route": "No route available!",
+	"waiting ": "Waiting at the station",
+	"deleted": "Deleted",
+	"delay": "Delay",
+	"on_time": "On time",
+	"information": "Information:",
+	"departure": "Departure:",
+	"duration": "Duration:",
+	"destination": "Destination:",
+	"peculiarities": "Specific aspects:",
+	"c02": "C02 issued:"
+}
