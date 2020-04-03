@@ -32,6 +32,14 @@ Module.register("MMM-SNCF", {
         return [this.file("css/MMM-SNCF.css")];
     },
 
+    // Load translations files
+    getTranslations: function () {
+        return {
+            en: "translations/en.json",
+            fr: "translations/fr.json"
+        };
+    },
+
     // Define start sequence.
     start: function () {
         Log.info("Starting module: " + this.name);
@@ -68,13 +76,13 @@ Module.register("MMM-SNCF", {
     getDom: function () {
         if (!this.loaded) {
             var wrapper = document.createElement("div");
-            wrapper.innerHTML = "Loading next trains...";
+            wrapper.innerHTML = this.translate("loading");
             wrapper.className = "dimmed light small";
             return wrapper;
         }
 
         var container = document.createElement("div");
-        container.className = "div-transilien";
+        container.className = "small div-transilien";
 
         if (this.transports.length > 0) {
             var table = document.createElement("table");
@@ -143,19 +151,19 @@ Module.register("MMM-SNCF", {
                 stateCell.className = "td-peculiarity";
 
                 if (transport.type == "waiting") {
-                    stateCell.innerHTML = "<span class='waiting-station'>Attente en gare</span>";
+                    stateCell.innerHTML = "<span class='waiting-station'>" + this.translate("waiting") + "</span>";
                 }
                 else if (transport.state == "NO_SERVICE") {
-                    stateCell.innerHTML = "<span class='deleted'><i class='fa fa-ban' aria-hidden='true'></i> Supprimé</span>";
+                    stateCell.innerHTML = "<span class='deleted'><i class='fa fa-ban' aria-hidden='true'></i>&nbsp" + this.translate("deleted") + "</span>";
                 }
                 else if (transport.state != "") {
-                    stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i> " + transport.state + "</span>";
+                    stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + transport.state + "</span>";
                 }
                 else if (transport.delay != "" && transport.delay !== null) {
-                    stateCell.innerHTML = "<span class='state'><i class='fa fa-clock-o' aria-hidden='true'></i> Retard " + transport.delay + "</span>";
+                    stateCell.innerHTML = "<span class='state'><i class='fa fa-clock-o' aria-hidden='true'></i>&nbsp" + this.translate("delay") + "&nbsp" + transport.delay + "</span>";
                 }
                 else {
-                    stateCell.innerHTML = "<span class='on-time'>A l'heure</span>";
+                    stateCell.innerHTML = "<span class='on-time'>" + this.translate("on_time") + "</span>";
                 }
 
                 if (transport.disruptionInfo !== null) {
@@ -168,7 +176,7 @@ Module.register("MMM-SNCF", {
                     var c02Cell = document.createElement("td");
                     c02Cell.className = "td-c02";
 
-                    c02Cell.innerHTML = "<span><i class='fa fa-leaf' aria-hidden='true'></i> " + transport.c02 + "</span>";
+                    c02Cell.innerHTML = "<span><i class='fa fa-leaf' aria-hidden='true'></i>&nbsp" + transport.c02 + "</span>";
 
                     row.appendChild(c02Cell);
                 }
@@ -182,38 +190,38 @@ Module.register("MMM-SNCF", {
                 if (this.config.displayName) {
                     var h1 = document.createElement("th");
                     h1.className = "th-transilien";
-                    h1.innerHTML = "Informations :";
+                    h1.innerHTML = this.translate("information");
                     rowHeader.appendChild(h1);
                 }
 
                 var h2 = document.createElement("th");
                 h2.className = "th-transilien";
-                h2.innerHTML = "Départ :";
+                h2.innerHTML = this.translate("departure");
                 rowHeader.appendChild(h2);
 
                 if (this.config.displayDuration) {
                     var h3 = document.createElement("th");
                     h3.className = "th-transilien";
-                    h3.innerHTML = "Durée :";
+                    h3.innerHTML = this.translate("duration");
                     rowHeader.appendChild(h3);
                 }
 
                 if (this.config.displayDestination) {
                     var h4 = document.createElement("th");
                     h4.className = "th-transilien";
-                    h4.innerHTML = "Destination :";
+                    h4.innerHTML = this.translate("destination");
                     rowHeader.appendChild(h4);
                 }
 
                 var h5 = document.createElement("th");
                 h5.className = "th-transilien";
-                h5.innerHTML = "Particularités :";
+                h5.innerHTML = this.translate("peculiarities");
                 rowHeader.appendChild(h5);
 
                 if (this.config.displayC02) {
                     var h6 = document.createElement("th");
                     h6.className = "th-transilien";
-                    h6.innerHTML = "C02 émis :";
+                    h6.innerHTML = this.translate("c02");
                     rowHeader.appendChild(h6);
                 }
 
@@ -223,7 +231,7 @@ Module.register("MMM-SNCF", {
             container.appendChild(table);
         }
         else {
-            container.innerHTML = "Aucun trajet disponible !";
+            container.innerHTML = this.translate("no_route");
         }
 
         return container;
