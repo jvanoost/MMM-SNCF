@@ -15,11 +15,15 @@ Module.register("MMM-SNCF", {
         animationSpeed: 2000,
         debugging: false,
         lang: config.language,
+        dateFormat: 'llll',
         retryDelay: 1 * 10 * 1000,
         initialLoadDelay: 0, // start delay seconds.
         numberDays: 1,
+        maxNbTransfers: 10,
         displayDuration: true,
         displayName: true,
+        displayDestination: false,
+        displayC02: false,
         displayHeaders: true,
     },
 
@@ -55,141 +59,174 @@ Module.register("MMM-SNCF", {
         /***************************************************/
 
         this.sendSocketNotification('CONFIG', this.config);
+
         this.loaded = false;
         this.updateTimer = null;
     },
 
     // Override dom generator.
     getDom: function () {
-        var self = this;
-
-        var wrapper = document.createElement("div");
-
         if (!this.loaded) {
+            var wrapper = document.createElement("div");
             wrapper.innerHTML = "Loading next trains...";
             wrapper.className = "dimmed light small";
             return wrapper;
         }
 
-        var table = document.createElement("table");
-        table.className = "small transilien";
+        var container = document.createElement("div");
+        container.className = "div-transilien";
 
-        var addStateHeader = false;
-        var addDelayHeader = false;
+        if (this.transports.length > 0) {
+            var table = document.createElement("table");
+            table.className = "small table-transilien";
 
-        var rowHeader = document.createElement("tr");
-        rowHeader.className = "small th-transilien";
-        table.appendChild(rowHeader);
+            var rowHeader = document.createElement("tr");
+            rowHeader.className = "tr-heading";
+            table.appendChild(rowHeader);
 
-        // adding next schedules
-        for (var t in this.transports) {
-            var transport = this.transports[t];
+            // adding next schedules
+            for (var t in this.transports) {
+                var transport = this.transports[t];
 
-            if (this.config.debugging) console.log(transport)
+                var row = document.createElement("tr");
+                row.className = "tr-transilien" + " " + transport.state + " " + transport.endOfJourney;
 
-            var row = document.createElement("tr");
-            row.className = "small tr-transilien";
+                if (this.config.displayName) {
+                    var nameCell = document.createElement("td");
+                    nameCell.className = "td-information";
 
-            var content = ""
+                    if (transport.type !== "waiting") {
+                        nameCell.innerHTML = "<span class='name'><i class='fa fa-train' aria-hidden='true'></i> " + transport.name + "</span><br />";
+                    }
+                    else {
+                        nameCell.innerHTML = "<i class='fas fa-walking' aria-hidden='true'></i>";
+                    }
 
-            var stateCell = document.createElement("td");
-
-            if (transport.state == "NO_SERVICE") {
-                addStateHeader = true;
-                content = "<span class='state'><i class='fa fa-ban aria-hidden='true'></i> Supprimé</span> &nbsp;&nbsp;";
-            }
-            else if (transport.state != "") {
-                addStateHeader = true;
-                content = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i> " + transport.state + "</span>  &nbsp;&nbsp;";
-            }
-
-            stateCell.innerHTML = content;
-
-            row.appendChild(stateCell);
-
-            var delayCell = document.createElement("td");
-
-            if (transport.delay != "" && transport.delay != null) {
-                addDelayHeader = true;
-                content = "<span class='state'><i class='fa fa-clock-o aria-hidden='true'></i> " + transport.delay + "</span> &nbsp;&nbsp;";
-            }
-
-            delayCell.innerHTML = content;
-
-            row.appendChild(delayCell);
-
-            if (this.config.displayName) {
-                var nameCell = document.createElement("td");
-
-                content = "<span class='trainName'>" + transport.name + "</span> &nbsp;&nbsp;";
-
-                nameCell.innerHTML = content;
-
-                row.appendChild(nameCell);
-            }
-
-            var dateCell = document.createElement("td");
-
-            if (transport.delay == 0 || transport.delay == null) {
-                content = transport.date + "&nbsp;&nbsp;";
-            }
-            else {
-                content = "<span class='oldHoraire'>" + transport.dateTheorique + "</span> &nbsp;&nbsp;";
-
-                if (transport.disruptionInfo !== 0) {
-                    content = transport.disruptionInfo.amended_departure_time;
-                    content = "<br /><span class='disruptionCause'>" + transport.disruptionInfo.cause + "</span> &nbsp;&nbsp;";
+                    row.appendChild(nameCell);
                 }
+
+                var dateCell = document.createElement("td");
+                dateCell.className = "td-date";
+
+                if (transport.delay == 0 || transport.delay == null) {
+                    dateCell.innerHTML = transport.date;
+                }
+                else {
+                    dateCell.innerHTML = "<span class='old-horaire'>" + transport.originalDate + "</span>";
+
+                    if (transport.disruptionInfo !== null) {
+                        dateCell.innerHTML += "<br /><span>" + transport.disruptionInfo.amended_departure_time + "</span>"; // Nouvelle heure de départ
+                    }
+                }
+
+                row.appendChild(dateCell);
+
+                if (this.config.displayDuration) {
+                    var durationCell = document.createElement("td");
+                    durationCell.className = "td-duration";
+
+                    durationCell.innerHTML = "<span>" + transport.duration + "</span>";
+
+                    row.appendChild(durationCell);
+                }
+
+                if (this.config.displayDestination) {
+                    var destinationCell = document.createElement("td");
+                    destinationCell.className = "td-destination";
+
+                    destinationCell.innerHTML = "<span>" + transport.destination + "</span>";
+
+                    row.appendChild(destinationCell);
+                }
+
+                var stateCell = document.createElement("td");
+                stateCell.className = "td-peculiarity";
+
+                if (transport.type == "waiting") {
+                    stateCell.innerHTML = "<span class='waiting-station'>Attente en gare</span>";
+                }
+                else if (transport.state == "NO_SERVICE") {
+                    stateCell.innerHTML = "<span class='deleted'><i class='fa fa-ban' aria-hidden='true'></i> Supprimé</span>";
+                }
+                else if (transport.state != "") {
+                    stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i> " + transport.state + "</span>";
+                }
+                else if (transport.delay != "" && transport.delay !== null) {
+                    stateCell.innerHTML = "<span class='state'><i class='fa fa-clock-o' aria-hidden='true'></i> Retard " + transport.delay + "</span>";
+                }
+                else {
+                    stateCell.innerHTML = "<span class='on-time'>A l'heure</span>";
+                }
+
+                if (transport.disruptionInfo !== null) {
+                    stateCell.innerHTML += "<br /><span class='disruption-cause'>" + transport.disruptionInfo.cause + "</span>";
+                }
+
+                row.appendChild(stateCell);
+
+                if (this.config.displayC02 && transport.c02 != 0) {
+                    var c02Cell = document.createElement("td");
+                    c02Cell.className = "td-c02";
+
+                    c02Cell.innerHTML = "<span><i class='fa fa-leaf' aria-hidden='true'></i> " + transport.c02 + "</span>";
+
+                    row.appendChild(c02Cell);
+                }
+
+                table.appendChild(row);
             }
 
-            dateCell.innerHTML = content;
+            if (this.config.displayHeaders) {
+                var rowHeader = table.childNodes[0];
 
-            row.appendChild(dateCell);
+                if (this.config.displayName) {
+                    var h1 = document.createElement("th");
+                    h1.className = "th-transilien";
+                    h1.innerHTML = "Informations :";
+                    rowHeader.appendChild(h1);
+                }
 
-            if (this.config.displayDuration) {
-                var durationCell = document.createElement("td");
+                var h2 = document.createElement("th");
+                h2.className = "th-transilien";
+                h2.innerHTML = "Départ :";
+                rowHeader.appendChild(h2);
 
-                content = "<span class='trainDuration'>" + self.timeFormatting(transport.duration) + "</span> &nbsp;&nbsp;";
+                if (this.config.displayDuration) {
+                    var h3 = document.createElement("th");
+                    h3.className = "th-transilien";
+                    h3.innerHTML = "Durée :";
+                    rowHeader.appendChild(h3);
+                }
 
-                durationCell.innerHTML = content;
+                if (this.config.displayDestination) {
+                    var h4 = document.createElement("th");
+                    h4.className = "th-transilien";
+                    h4.innerHTML = "Destination :";
+                    rowHeader.appendChild(h4);
+                }
 
-                row.appendChild(durationCell);
-            }
-
-            table.appendChild(row);
-        }
-
-        if (this.config.displayHeaders) {
-            var rowHeader = table.childNodes[0];
-
-            var h1 = document.createElement("th");
-            h1.innerHTML = addStateHeader ? "Etat :" : "";
-            rowHeader.appendChild(h1);
-
-            var h2 = document.createElement("th");
-            h2.innerHTML = addDelayHeader ? "Retard :" : "";
-            rowHeader.appendChild(h2);
-
-            if (this.config.displayName) {
-                var h3 = document.createElement("th");
-                h3.innerHTML = "N° :";
-                rowHeader.appendChild(h3);
-            }
-
-            var h4 = document.createElement("th");
-            h4.innerHTML = "Départ :";
-            rowHeader.appendChild(h4);
-
-            if (this.config.displayDuration) {
                 var h5 = document.createElement("th");
-                h5.innerHTML = "Durée :";
+                h5.className = "th-transilien";
+                h5.innerHTML = "Particularités :";
                 rowHeader.appendChild(h5);
+
+                if (this.config.displayC02) {
+                    var h6 = document.createElement("th");
+                    h6.className = "th-transilien";
+                    h6.innerHTML = "C02 émis :";
+                    rowHeader.appendChild(h6);
+                }
+
+                table.childNodes[0] = rowHeader;
             }
 
-            table.childNodes[0] = rowHeader;
+            container.appendChild(table);
+        }
+        else {
+            container.innerHTML = "Aucun trajet disponible !";
         }
 
-        return table;
+        return container;
     },
 
     // using the results retrieved for the API call
@@ -208,16 +245,4 @@ Module.register("MMM-SNCF", {
             this.updateDom(this.config.animationSpeed);
         }
     },
-
-    timeFormatting: function (totalMinutes) {
-        if (totalMinutes >= 60) {
-            var hours = Math.floor(totalMinutes / 60);
-            var minutes = totalMinutes % 60;
-
-            return hours + " h " + minutes + " min";
-        }
-        else {
-            return totalMinutes + " min";
-        }
-    }
 });
