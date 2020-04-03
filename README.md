@@ -23,6 +23,9 @@ To use this module, add it to the modules array in the `config/config.js` file:
         departureStationUIC: "stop_area:OCE:SA:87286005",
         arrivalStationUIC: "stop_area:OCE:SA:87286583",
         apiKey: "", // You must add your API key
+	numberDays: 2,
+        dateFormat: 'dddd HH:MM',
+        displayCo2: true,
     }
 },
 ```
@@ -42,9 +45,13 @@ The following properties can be configured:
 | `departureStationUIC` | You need to find your train station and find the [**UIC**](https://ressources.data.sncf.com/explore/dataset/referentiel-gares-voyageurs) of the train station (*not the uic7 column, the UIC*).<br><br> This value is **REQUIRED**
 | `arrivalStationUIC` | You need to find your train station and find the [**UIC**](https://ressources.data.sncf.com/explore/dataset/referentiel-gares-voyageurs) of the train station (*not the uic7 column, the UIC*).<br><br> This value is **REQUIRED**
 | `numberDays` | Number of results per day. <br><br> **Default value:** `1` 
-| `displayName` | Display train name. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `true`
+| `maxNbTransfers` | Maximum number of transfers in each journey. <br><br> **Default value:** `10` 
+| `displayName` | Display train name and type. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `true`
 | `displayDuration` | Display journey time. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `true`
-| `displayHeaders` | Display headers. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `true`
+| `displayDestination` | Display the destination of the train. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `false`
+| `displayC02` | Display the C02 emissions for your trip. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `false`
+| `displayHeaders` | Display columns headers. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `true`
+| `dateFormat` | Format to use for the date of train. <br><br> **Possible values:** [Moment.js formats](https://momentjs.com/docs/#/parsing/string-format/) <br> **Default value:** `llll`
 
 ## Further information and support
 
