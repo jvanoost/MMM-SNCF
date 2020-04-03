@@ -31,7 +31,7 @@
 }
 
 .td-transilien {
-    padding: 25px;
+    padding: 5px 25px 5px 25px;
 }
 
 .tr-transilien {
@@ -39,17 +39,17 @@
 }
 
 .td-date, .td-peculiarity, .td-c02 {
-    padding: 25px;
+    padding: 5px 25px 5px 25px;
     text-align: right;
 }
 
 .td-information, .td-destination {
-    padding: 25px;
+    padding: 5px 25px 5px 25px;
     text-align: center;
 }
 
 .td-duration {
-    padding: 25px;
+    padding: 5px 25px 5px 25px;
     color: #ffffff;
     font-weight: bold;
     text-align: right;
@@ -85,6 +85,6 @@
 }
 
 .END_JOURNEY td {
-    padding: 25px;
+    padding: 5px 25px 5px 25px;
     border-bottom: 1px solid #808080;
 }
