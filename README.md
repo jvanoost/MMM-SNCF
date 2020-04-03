@@ -8,15 +8,15 @@ Clone the git in the /modules folder of Magic Mirror and run the "npm install" c
 
 ## Example
 
-Trajet avec correspondance :
+Transfer route:
 
 ![Module SNCF](https://github.com/abrochet/MMM-SNCF/blob/master/screenshots/transilien.png)
 
-Trajet sans correspondance :
+Unmatched trip:
 
 ![Module SNCF](https://github.com/abrochet/MMM-SNCF/blob/master/screenshots/transilien_2.png) 
 
-Pas de train disponible :
+No train available:
 
 ![Module SNCF](https://github.com/abrochet/MMM-SNCF/blob/master/screenshots/transilien_3.png)
 
