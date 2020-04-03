@@ -186,6 +186,7 @@ module.exports = NodeHelper.create({
         if (this.config.debugging) console.log("Length transport : " + this.transports.length);
 
         this.loaded = true;
+
         this.sendSocketNotification("TRAINS", {
             id: this.config.id,
             transports: this.transports
@@ -200,6 +201,7 @@ module.exports = NodeHelper.create({
         var nextLoad = this.config.updateInterval;
 
         if (typeof delay !== "undefined" && delay > 0) {
+            if (this.config.debugging) console.log("Delay : " + delay);
             nextLoad = delay;
         }
 
