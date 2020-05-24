@@ -34,7 +34,7 @@ To use this module, add it to the modules array in the `config/config.js` file:
         arrivalStationUIC: "stop_area:OCE:SA:87286583",
         apiKey: "", // You must add your API key
 	numberDays: 2,
-        dateFormat: 'dddd HH:MM',
+        dateFormat: 'dddd HH:mm', // affiche par exemple Jeudi 08:43
         displayCo2: true,
     }
 },
