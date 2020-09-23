@@ -1,10 +1,10 @@
 /* Timetable for SNCF transport Module */
 /* Magic Mirror
-	* Module: MMM-SNCF
-	*
-	* By Jérome Van Oost
-	* based on a script from Louis-Guillaume MORAND - https://github.com/lgmorand/MMM-Transilien#readme
-	* MIT Licensed.
+* Module: MMM-SNCF
+*
+* By Jérome Van Oost & abrochet
+* based on a script from Louis-Guillaume MORAND - https://github.com/lgmorand/MMM-Transilien#readme
+* MIT Licensed.
 */
 Module.register("MMM-SNCF", {
     transports: [],
