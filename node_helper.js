@@ -1,9 +1,9 @@
 /* Timetable for SNCF train Module */
 /* Magic Mirror
-	* Module: MMM-SNCF
-	*
-	* By Jerome Van Oost
-	* MIT Licensed.
+* Module: MMM-SNCF
+*
+* By Jerome Van Oost & abrochet
+* MIT Licensed.
 */
 const NodeHelper = require("node_helper");
 const unirest = require('unirest');
