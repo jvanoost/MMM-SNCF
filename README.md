@@ -2,6 +2,25 @@
 
 MMM-SNCF was developped from the ![MMM-Transilien](https://github.com/lgmorand/MMM-Transilien) module.
 
+## WARNING
+Due tu SNCF API update, we need to change the API provider which is now [Navitia](https://www.navitia.io/)
+You need to create an account there to get a new API token
+So your departure station should change
+For Lille Flandre, it was
+`stop_point:OCE:SP:TrainTER-87286005`
+it is now 
+`stop_area:STE:SA:OCE87286005`
+
+So I could imagine you could easily find the change you have to make.
+You can also fin your new id there : [https://api.navitia.io/v1/coverage/fr-ne/places/?q=Lille Flandre](https://api.navitia.io/v1/coverage/fr-ne/places/?q=Lille%20Flandre)
+and find the id you need
+
+Don't forget to update your config.js file and add the **coverage** of your departure zone.
+
+You can also try to play with [navitia playground](https://canaltp.github.io/navitia-playground/play.html) with your token
+You can enter this URL to start playing :
+`https://api.navitia.io/v1/coverage/fr-ne/journeys?from=stop_area%3ASTE%3ASA%3AOCE87286005&to=stop_area%3ASTE%3ASA%3AOCE87286583&`
+
 ## Installation
 
 Clone the git in the /modules folder of Magic Mirror and run the "npm install" command which will installed the required node modules
@@ -36,6 +55,7 @@ To use this module, add it to the modules array in the `config/config.js` file:
 	numberDays: 2,
         dateFormat: 'dddd HH:mm', // display for example with french locale Jeudi 08:43
         displayCo2: true,
+        coverage: "fr-ne",
     }
 },
 ```
@@ -62,6 +82,7 @@ The following properties can be configured:
 | `displayC02` | Display the C02 emissions for your trip. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `false`
 | `displayHeaders` | Display columns headers. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `true`
 | `dateFormat` | Format to use for the date of train.<br> **Caution:**<br>h display hours in 12h format / H in 24h<br>for minutes, it is mm. MM display the month number<br><br> **Possible values:** [Moment.js formats](https://momentjs.com/docs/#/parsing/string-format/) <br> **Default value:** `llll`
+| `coverage` | Coverage of departure station **REQUIRED**
 
 ## Further information and support
 
