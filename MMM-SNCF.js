@@ -153,11 +153,34 @@ Module.register("MMM-SNCF", {
                 if (transport.type == "waiting") {
                     stateCell.innerHTML = "<span class='waiting-station'>" + this.translate("waiting") + "</span>";
                 }
-                else if (transport.state == "NO_SERVICE") {
-                    stateCell.innerHTML = "<span class='deleted'><i class='fa fa-ban' aria-hidden='true'></i>&nbsp" + this.translate("deleted") + "</span>";
-                }
                 else if (transport.state != "") {
-                    stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + transport.state + "</span>";
+					switch (transport.state) {
+						case 'SIGNIFICANT_DELAYS':
+							stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + this.translate("significant_delay") + "</span>";
+						break;						
+						case 'REDUCED_SERVICE':
+							stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + this.translate("reduced_service") + "</span>";
+						break;						
+						case 'NO_SERVICE':
+							stateCell.innerHTML = "<span class='deleted'><i class='fa fa-ban' aria-hidden='true'></i>&nbsp" + this.translate("no_service") + "</span>";						
+						break;
+						case 'MODIFIED_SERVICE':
+							stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + this.translate("modified_service") + "</span>";						
+						break;
+						case 'ADDITIONAL_SERVICE':
+							stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + this.translate("additional_service") + "</span>";						
+						break;
+						case 'UNKNOWN_EFFECT':
+							stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + this.translate("unknown_effect") + "</span>";						
+						break;
+						case 'DETOUR':
+							stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + this.translate("modified_service") + "</span>";						
+						break;
+						case 'OTHER_EFFECT':
+						default:
+							stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + this.translate("other_effect") + "</span>";	
+						break;
+					}			       
                 }
                 else if (transport.delay != "" && transport.delay !== null) {
                     stateCell.innerHTML = "<span class='state'><i class='fa fa-clock-o' aria-hidden='true'></i>&nbsp" + this.translate("delay") + "&nbsp" + transport.delay + "</span>";
