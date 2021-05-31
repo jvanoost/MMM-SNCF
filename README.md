@@ -23,7 +23,7 @@ You can enter this URL to start playing :
 
 ## Installation
 
-Clone the git in the /modules folder of Magic Mirror and run the "npm install" command which will installed the required node modules
+Clone the git in the /modules folder of Magic Mirror and run the "npm install" command which will installed the required node modules.
 
 ## Example
 
@@ -67,13 +67,13 @@ The following properties can be configured:
 | Option           | Description
 | ---------------- | -----------
 | `updateInterval` | How often do the trains have to change? (Milliseconds) <br><br> **Possible values:** `1000` - `86400000` <br> **Default value:** `60000` (60 seconds)
-| `animationSpeed` | Speed of the update animation. (Milliseconds) <br><br> **Possible values:**`0` - `5000` <br> **Default value:** `2000` (2 seconds)
+| `animationSpeed` | Speed of the update animation. (Milliseconds) <br><br> **Possible values:** `0` - `5000` <br> **Default value:** `2000` (2 seconds)
 | `debugging` | Display logs in console. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `false`
 | `retryDelay` | The delay before retrying after a request failure. (Milliseconds) <br><br> **Possible values:** `1000` - `60000` <br> **Default value:** `10000`
 | `initialLoadDelay` | The initial delay before loading. If you have multiple modules that use the same API key, you might want to delay one of the requests. (Milliseconds) <br><br> **Possible values:** `1000` - `5000` <br> **Default value:** `0`
-| `apiKey` | The [SNCF](https://www.digital.sncf.com/startup/api) API key, which can be obtained by creating an SNCF account. <br><br> This value is **REQUIRED**
-| `departureStationUIC` | You need to find your train station and find the [**UIC**](https://ressources.data.sncf.com/explore/dataset/referentiel-gares-voyageurs) of the train station (*not the uic7 column, the UIC*).<br><br> This value is **REQUIRED**
-| `arrivalStationUIC` | You need to find your train station and find the [**UIC**](https://ressources.data.sncf.com/explore/dataset/referentiel-gares-voyageurs) of the train station (*not the uic7 column, the UIC*).<br><br> This value is **REQUIRED**
+| `apiKey` | The [Navitia](https://www.navitia.io/) API key, which can be obtained by creating an Navitia account. <br><br> This value is **REQUIRED**
+| `departureStationUIC` | You need to find your station code using the [**Navitia playground**](https://canaltp.github.io/navitia-playground/play.html?request=https%3A%2F%2Fapi.navitia.io%2Fv1%2Fcoverage%2F%257Bregion.id%257D%2Fstop_areas%2F%257Bstop_area.id%257D%2Fdepartures).<br><br> This value is **REQUIRED**
+| `arrivalStationUIC` | You need to find your station code using the [**Navitia playground**](https://canaltp.github.io/navitia-playground/play.html?request=https%3A%2F%2Fapi.navitia.io%2Fv1%2Fcoverage%2F%257Bregion.id%257D%2Fstop_areas%2F%257Bstop_area.id%257D%2Fdepartures).<br><br> This value is **REQUIRED**
 | `numberDays` | Number of results per day. <br><br> **Default value:** `1` 
 | `maxNbTransfers` | Maximum number of transfers in each journey. <br><br> **Default value:** `10` 
 | `displayName` | Display train name and type. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `true`
@@ -81,8 +81,8 @@ The following properties can be configured:
 | `displayDestination` | Display the destination of the train. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `false`
 | `displayC02` | Display the C02 emissions for your trip. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `false`
 | `displayHeaders` | Display columns headers. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `true`
-| `dateFormat` | Format to use for the date of train.<br> **Caution:**<br>h display hours in 12h format / H in 24h<br>for minutes, it is mm. MM display the month number<br><br> **Possible values:** [Moment.js formats](https://momentjs.com/docs/#/parsing/string-format/) <br> **Default value:** `llll`
-| `coverage` | Coverage of departure station **REQUIRED**<br>[Check your coverage](https://www.navitia.io/datasets) Select a city near your departure station and check the coverage
+| `dateFormat` | Format to use for the date of train.<br> **Caution:**<br>h display hours in 12h format / H in 24h<br>for minutes, it is mm. MM display the month number.<br><br> **Possible values:** [Moment.js formats](https://momentjs.com/docs/#/parsing/string-format/) <br> **Default value:** `llll`
+| `coverage` | Coverage of departure station **REQUIRED**<br>[Check your coverage](https://www.navitia.io/datasets) Select a city near your departure station and check the coverage.
 
 ## Further information and support
 
