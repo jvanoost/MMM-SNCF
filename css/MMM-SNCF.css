@@ -1,91 +1,95 @@
 .fa-leaf {
-    color: #34a853;
+  color: #34a853;
 }
 
 .fa-ban {
-    color: red;
+  color: red;
 }
 
 .fa-clock-o {
-    color: yellow;
+  color: yellow;
 }
 
 .div-transilien {
-    margin: 0 auto;
-    width: auto;
+  margin: 0 auto;
+  width: auto;
 }
 
 .table-transilien {
-    table-layout: auto;
-    width: auto !important;
-    line-height: 1.5em;
-    border-collapse: collapse;
-    margin: auto;
+  table-layout: auto;
+  width: auto !important;
+  line-height: 1.5em;
+  border-collapse: collapse;
+  margin: auto;
 }
 
-.tr-heading, .th-transilien {
-    font-style: italic;
-    color: #A9A9A9;
-    font-size: 1em;
-    border-bottom: 1px solid #808080;
+.tr-heading,
+.th-transilien {
+  font-style: italic;
+  color: #a9a9a9;
+  font-size: 1em;
+  border-bottom: 1px solid #808080;
 }
 
 .td-transilien {
-    padding: 5px 25px 5px 25px;
+  padding: 5px 25px 5px 25px;
 }
 
 .tr-transilien {
-    text-align: right;
+  text-align: right;
 }
 
-.td-date, .td-peculiarity, .td-c02 {
-    padding: 5px 25px 5px 25px;
-    text-align: right;
+.td-date,
+.td-peculiarity,
+.td-c02 {
+  padding: 5px 25px 5px 25px;
+  text-align: right;
 }
 
-.td-information, .td-destination {
-    padding: 5px 25px 5px 25px;
-    text-align: center;
+.td-information,
+.td-destination {
+  padding: 5px 25px 5px 25px;
+  text-align: center;
 }
 
 .td-duration {
-    padding: 5px 25px 5px 25px;
-    color: #ffffff;
-    font-weight: bold;
-    text-align: right;
+  padding: 5px 25px 5px 25px;
+  color: #ffffff;
+  font-weight: bold;
+  text-align: right;
 }
 
 .name {
-    border: 2px solid #ffffff;
-    background: #ffffff;
-    color: black;
-    border-radius: 5px;
+  border: 2px solid #ffffff;
+  background: #ffffff;
+  color: black;
+  border-radius: 5px;
 }
 
 .deleted {
-    color: red !important;
+  color: red !important;
 }
 
 .state {
-    color: yellow !important;
+  color: yellow !important;
 }
 
 .old-horaire {
-    color: #696969;
-    text-decoration: line-through;
-    font-size: 0.8em;
+  color: #696969;
+  text-decoration: line-through;
+  font-size: 0.8em;
 }
 
 .disruption-cause {
-    font-style: italic;
-    font-size: 0.8em;
+  font-style: italic;
+  font-size: 0.8em;
 }
 
 .NO_SERVICE {
-    text-decoration: line-through red;
+  text-decoration: line-through red;
 }
 
 .END_JOURNEY td {
-    padding: 5px 25px 5px 25px;
-    border-bottom: 1px solid #808080;
+  padding: 5px 25px 5px 25px;
+  border-bottom: 1px solid #808080;
 }
