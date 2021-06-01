@@ -1,11 +1,11 @@
-/* Timetable for SNCF transport Module */
-/* Magic Mirror
-* Module: MMM-SNCF
-*
-* By Jérome Van Oost & abrochet
-* based on a script from Louis-Guillaume MORAND - https://github.com/lgmorand/MMM-Transilien#readme
-* MIT Licensed.
-*/
+/* Timetable for SNCF transport Module
+ * Magic Mirror
+ * Module: MMM-SNCF
+ *
+ * By Jérome Van Oost & abrochet
+ * based on a script from Louis-Guillaume MORAND - https://github.com/lgmorand/MMM-Transilien#readme
+ * MIT Licensed.
+ */
 Module.register("MMM-SNCF", {
     transports: [],
 
@@ -25,15 +25,16 @@ Module.register("MMM-SNCF", {
         displayDestination: false,
         displayC02: false,
         displayHeaders: true,
+        mode: 0,
     },
 
     // Define required scripts.
-    getStyles: function () {
+    getStyles: function() {
         return [this.file("css/MMM-SNCF.css")];
     },
 
     // Load translations files
-    getTranslations: function () {
+    getTranslations: function() {
         return {
             en: "translations/en.json",
             fr: "translations/fr.json"
@@ -41,12 +42,12 @@ Module.register("MMM-SNCF", {
     },
 
     // Define start sequence.
-    start: function () {
+    start: function() {
         Log.info("Starting module: " + this.name);
 
-        if (this.config.debugging) Log.info("DEBUG mode activated");
+        if (this.config.debugging) Log.info("DEBUG mode activated !");
 
-        /*** Backward compatibility of parameters ***/
+        /*** Backward compatibility of parameters 
 
         if (this.config.departUIC != null) {
             this.config.departureStationUIC = this.config.departUIC;
@@ -73,7 +74,7 @@ Module.register("MMM-SNCF", {
     },
 
     // Override dom generator.
-    getDom: function () {
+    getDom: function() {
         if (!this.loaded) {
             var wrapper = document.createElement("div");
             wrapper.innerHTML = this.translate("loading");
@@ -105,8 +106,7 @@ Module.register("MMM-SNCF", {
 
                     if (transport.type !== "waiting") {
                         nameCell.innerHTML = "<span class='name'><i class='fa fa-train' aria-hidden='true'></i> " + transport.name + "</span><br />";
-                    }
-                    else {
+                    } else {
                         nameCell.innerHTML = "<i class='fas fa-walking' aria-hidden='true'></i>";
                     }
 
@@ -118,8 +118,7 @@ Module.register("MMM-SNCF", {
 
                 if (transport.delay == 0 || transport.delay == null) {
                     dateCell.innerHTML = transport.date;
-                }
-                else {
+                } else {
                     dateCell.innerHTML = "<span class='old-horaire'>" + transport.originalDate + "</span>";
 
                     if (transport.disruptionInfo !== null) {
@@ -152,41 +151,39 @@ Module.register("MMM-SNCF", {
 
                 if (transport.type == "waiting") {
                     stateCell.innerHTML = "<span class='waiting-station'>" + this.translate("waiting") + "</span>";
-                }
-                else if (transport.state != "") {
-					switch (transport.state) {
-						case 'SIGNIFICANT_DELAYS':
-							stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + this.translate("significant_delay") + "</span>";
-						break;						
-						case 'REDUCED_SERVICE':
-							stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + this.translate("reduced_service") + "</span>";
-						break;						
-						case 'NO_SERVICE':
-							stateCell.innerHTML = "<span class='deleted'><i class='fa fa-ban' aria-hidden='true'></i>&nbsp" + this.translate("no_service") + "</span>";						
-						break;
-						case 'MODIFIED_SERVICE':
-							stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + this.translate("modified_service") + "</span>";						
-						break;
-						case 'ADDITIONAL_SERVICE':
-							stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + this.translate("additional_service") + "</span>";						
-						break;
-						case 'UNKNOWN_EFFECT':
-							stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + this.translate("unknown_effect") + "</span>";						
-						break;
-						case 'DETOUR':
-							stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + this.translate("modified_service") + "</span>";						
-						break;
-						case 'OTHER_EFFECT':
-						default:
-							stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + this.translate("other_effect") + "</span>";	
-						break;
-					}			       
-                }
-                else if (transport.delay != "" && transport.delay !== null) {
-                    stateCell.innerHTML = "<span class='state'><i class='fa fa-clock-o' aria-hidden='true'></i>&nbsp" + this.translate("delay") + "&nbsp" + transport.delay + "</span>";
-                }
-                else {
-                    stateCell.innerHTML = "<span class='on-time'>" + this.translate("on_time") + "</span>";
+                } else {
+                    switch (transport.state) {
+                        case 'SIGNIFICANT_DELAYS':
+                            if (transport.delay != "" && transport.delay !== null) {
+                                stateCell.innerHTML = "<span class='state'><i class='fa fa-clock-o' aria-hidden='true'></i>&nbsp" + this.translate("significant_delay") + "&nbsp" + transport.delay + "</span>";
+                            } else {
+                                stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + this.translate("significant_delay") + "</span>";
+                            }
+                            break;
+                        case 'REDUCED_SERVICE':
+                            stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + this.translate("reduced_service") + "</span>";
+                            break;
+                        case 'NO_SERVICE':
+                            stateCell.innerHTML = "<span class='deleted'><i class='fa fa-ban' aria-hidden='true'></i>&nbsp" + this.translate("no_service") + "</span>";
+                            break;
+                        case 'MODIFIED_SERVICE':
+                            stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + this.translate("modified_service") + "</span>";
+                            break;
+                        case 'ADDITIONAL_SERVICE':
+                            stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + this.translate("additional_service") + "</span>";
+                            break;
+                        case 'UNKNOWN_EFFECT':
+                            stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + this.translate("unknown_effect") + "</span>";
+                            break;
+                        case 'DETOUR':
+                            stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + this.translate("modified_service") + "</span>";
+                            break;
+                        case 'OTHER_EFFECT':
+                            stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + this.translate("other_effect") + "</span>";
+                        default:
+                            stateCell.innerHTML = "<span class='on-time'>" + this.translate("on_time") + "</span>";
+                            break;
+                    }
                 }
 
                 if (transport.disruptionInfo !== null) {
@@ -252,8 +249,7 @@ Module.register("MMM-SNCF", {
             }
 
             container.appendChild(table);
-        }
-        else {
+        } else {
             container.innerHTML = this.translate("no_route");
         }
 
@@ -261,7 +257,7 @@ Module.register("MMM-SNCF", {
     },
 
     // using the results retrieved for the API call
-    socketNotificationReceived: function (notification, payload) {
+    socketNotificationReceived: function(notification, payload) {
         if (notification === "TRAINS") {
             if (this.config.debugging) {
                 Log.info("Trains received");
