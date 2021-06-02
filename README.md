@@ -79,7 +79,7 @@ The following properties can be configured:
 | `displayName` | Display train name and type. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `true`
 | `displayDuration` | Display journey time. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `true`
 | `displayDestination` | Display the destination of the train. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `false`
-| `displayC02` | Display the C02 emissions for your trip. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `false`
+| `displayC02` | Display the C02 emissions for your trip. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `false` <br> Warning the option is disabled if the mode option is on '1'.
 | `displayHeaders` | Display columns headers. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `true`
 | `dateFormat` | Format to use for the date of train.<br> **Caution:**<br>h display hours in 12h format / H in 24h<br>for minutes, it is mm. MM display the month number.<br><br> **Possible values:** [Moment.js formats](https://momentjs.com/docs/#/parsing/string-format/) <br> **Default value:** `llll`
 | `coverage` | Coverage of departure station **REQUIRED**<br>[Check your coverage](https://www.navitia.io/datasets) Select a city near your departure station and check the coverage.
