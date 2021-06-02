@@ -25,10 +25,10 @@ module.exports = NodeHelper.create({
         var url = null;
 
         switch (this.config.mode) {
-            case 1:
-                url = "https://api.navitia.io/v1/coverage/" + this.config.coverage + "/stop_areas/" + this.config.departureStationUIC + "/departures?";
+            case 1: // Mode : Departures
+                url = "https://api.navitia.io/v1/coverage/" + this.config.coverage + "/stop_areas/" + this.config.departureStationUIC + "/departures?&count=" + this.config.numberDays + "&max_nb_transfers=" + this.config.maxNbTransfers;
                 break;
-            case 0:
+            case 0: // Mode : Journeys
             default:
                 url = "https://api.navitia.io/v1/coverage/" + this.config.coverage + "/journeys?from=" + this.config.departureStationUIC + "&to=" + this.config.arrivalStationUIC + "&datetime=" + moment().toISOString() + "&count=" + this.config.numberDays + "&max_nb_transfers=" + this.config.maxNbTransfers;
                 break;
@@ -103,10 +103,10 @@ module.exports = NodeHelper.create({
         if (this.config.debugging) console.log("Data : " + this.data);
 
         switch (this.config.mode) {
-            case 1:
+            case 1: // Mode : Departures
                 this.trainDepartures(data.departures);
                 break;
-            case 0:
+            case 0: // Mode : Journeys
             default:
                 this.trainJourneys(data.journeys);
                 break;

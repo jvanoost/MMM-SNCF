@@ -24,6 +24,7 @@ Module.register("MMM-SNCF", {
         displayName: true,
         displayDestination: false,
         displayC02: false,
+        displayPeculiarities: true,
         displayHeaders: true,
         mode: 0,
     },
@@ -47,7 +48,7 @@ Module.register("MMM-SNCF", {
 
         if (this.config.debugging) Log.info("DEBUG mode activated !");
 
-        /*** Backward compatibility of parameters 
+        /*** Backward compatibility of parameters ***
 
         if (this.config.departUIC != null) {
             this.config.departureStationUIC = this.config.departUIC;
@@ -66,6 +67,17 @@ Module.register("MMM-SNCF", {
         }
 
         /***************************************************/
+
+
+        switch (this.config.mode) {
+            case 1: // Mode : Departures
+                this.config.displayC02 = false;
+                this.displayPeculiarities = false;
+                break;
+            default: // Mode : Journeys
+				this.displayPeculiarities = true;
+                break;
+        }
 
         this.sendSocketNotification('CONFIG', this.config);
 
@@ -146,53 +158,57 @@ Module.register("MMM-SNCF", {
                     row.appendChild(destinationCell);
                 }
 
-                var stateCell = document.createElement("td");
-                stateCell.className = "td-peculiarity";
+                if (this.config.displayPeculiarities) {
+                    var stateCell = document.createElement("td");
+                    stateCell.className = "td-peculiarity";
 
-                if (transport.type == "waiting") {
-                    stateCell.innerHTML = "<span class='waiting-station'>" + this.translate("waiting") + "</span>";
-                } else {
-                    switch (transport.state) {
-                        case 'SIGNIFICANT_DELAYS':
-                            if (transport.delay != "" && transport.delay !== null) {
-                                stateCell.innerHTML = "<span class='state'><i class='fa fa-clock-o' aria-hidden='true'></i>&nbsp" + this.translate("significant_delay") + "&nbsp" + transport.delay + "</span>";
-                            } else {
-                                stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + this.translate("significant_delay") + "</span>";
-                            }
-                            break;
-                        case 'REDUCED_SERVICE':
-                            stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + this.translate("reduced_service") + "</span>";
-                            break;
-                        case 'NO_SERVICE':
-                            stateCell.innerHTML = "<span class='deleted'><i class='fa fa-ban' aria-hidden='true'></i>&nbsp" + this.translate("no_service") + "</span>";
-                            break;
-                        case 'MODIFIED_SERVICE':
-                            stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + this.translate("modified_service") + "</span>";
-                            break;
-                        case 'ADDITIONAL_SERVICE':
-                            stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + this.translate("additional_service") + "</span>";
-                            break;
-                        case 'UNKNOWN_EFFECT':
-                            stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + this.translate("unknown_effect") + "</span>";
-                            break;
-                        case 'DETOUR':
-                            stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + this.translate("modified_service") + "</span>";
-                            break;
-                        case 'OTHER_EFFECT':
-                            stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + this.translate("other_effect") + "</span>";
-                        default:
-                            stateCell.innerHTML = "<span class='on-time'>" + this.translate("on_time") + "</span>";
-                            break;
+                    if (transport.type == "waiting") {
+                        stateCell.innerHTML = "<span class='waiting-station'>" + this.translate("waiting") + "</span>";
+                    } else {
+                        switch (transport.state) {
+                            case 'SIGNIFICANT_DELAYS':
+                                if (transport.delay != "" && transport.delay !== null) {
+                                    stateCell.innerHTML = "<span class='state'><i class='fa fa-clock-o' aria-hidden='true'></i>&nbsp" + this.translate("significant_delay") + "&nbsp" + transport.delay + "</span>";
+                                } else {
+                                    stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + this.translate("significant_delay") + "</span>";
+                                }
+                                break;
+                            case 'REDUCED_SERVICE':
+                                stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + this.translate("reduced_service") + "</span>";
+                                break;
+                            case 'NO_SERVICE':
+                                stateCell.innerHTML = "<span class='deleted'><i class='fa fa-ban' aria-hidden='true'></i>&nbsp" + this.translate("no_service") + "</span>";
+                                break;
+                            case 'MODIFIED_SERVICE':
+                                stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + this.translate("modified_service") + "</span>";
+                                break;
+                            case 'ADDITIONAL_SERVICE':
+                                stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + this.translate("additional_service") + "</span>";
+                                break;
+                            case 'UNKNOWN_EFFECT':
+                                stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + this.translate("unknown_effect") + "</span>";
+                                break;
+                            case 'DETOUR':
+                                stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + this.translate("modified_service") + "</span>";
+                                break;
+                            case 'OTHER_EFFECT':
+                                stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + this.translate("other_effect") + "</span>";
+                            case undefined:
+                                break;
+                            default:
+                                stateCell.innerHTML = "<span class='on-time'>" + this.translate("on_time") + "</span>";
+                                break;
+                        }
                     }
+
+                    if (transport.disruptionInfo !== null) {
+                        stateCell.innerHTML += "<br /><span class='disruption-cause'>" + transport.disruptionInfo.cause + "</span>";
+                    }
+
+                    row.appendChild(stateCell);
                 }
 
-                if (transport.disruptionInfo !== null) {
-                    stateCell.innerHTML += "<br /><span class='disruption-cause'>" + transport.disruptionInfo.cause + "</span>";
-                }
-
-                row.appendChild(stateCell);
-
-                if (this.config.displayC02 && transport.c02 != 0) {
+                if (this.config.displayC02 && transport.c02 != undefined) {
                     var c02Cell = document.createElement("td");
                     c02Cell.className = "td-c02";
 
@@ -233,10 +249,12 @@ Module.register("MMM-SNCF", {
                     rowHeader.appendChild(h4);
                 }
 
-                var h5 = document.createElement("th");
-                h5.className = "th-transilien";
-                h5.innerHTML = this.translate("peculiarities");
-                rowHeader.appendChild(h5);
+                if (this.config.displayPeculiarities) {
+                    var h5 = document.createElement("th");
+                    h5.className = "th-transilien";
+                    h5.innerHTML = this.translate("peculiarities");
+                    rowHeader.appendChild(h5);
+                }
 
                 if (this.config.displayC02) {
                     var h6 = document.createElement("th");
