@@ -77,9 +77,10 @@ The following properties can be configured:
 | `numberDays` | Number of results per day. <br><br> **Default value:** `1` 
 | `maxNbTransfers` | Maximum number of transfers in each journey. <br><br> **Default value:** `10` 
 | `displayName` | Display train name and type. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `true`
-| `displayDuration` | Display journey time. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `true`
+| `displayDuration` | Display journey time. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `true` <br><br> **WARNING:** The option is disabled if the mode option is on '1'.
 | `displayDestination` | Display the destination of the train. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `false`
-| `displayC02` | Display the C02 emissions for your trip. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `false` <br> **WARNING:** The option is disabled if the mode option is on '1'.
+| `displayType` | Display the different types of trips. **Possible values:** `true` or `false` <br> **Default value:** `false` <br><br> **WARNING:** The option is disabled if the mode option is on '1'.
+| `displayC02` | Display the C02 emissions for your trip. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `false` <br><br> **WARNING:** The option is disabled if the mode option is on '1'.
 | `displayHeaders` | Display columns headers. <br><br> **Possible values:** `true` or `false` <br> **Default value:** `true`
 | `dateFormat` | Format to use for the date of train.<br> **Caution:**<br>h display hours in 12h format / H in 24h<br>for minutes, it is mm. MM display the month number.<br><br> **Possible values:** [Moment.js formats](https://momentjs.com/docs/#/parsing/string-format/) <br> **Default value:** `llll`
 | `coverage` | Coverage of departure station **REQUIRED**<br>[Check your coverage](https://www.navitia.io/datasets) Select a city near your departure station and check the coverage.

@@ -23,6 +23,7 @@ Module.register("MMM-SNCF", {
         displayDuration: true,
         displayName: true,
         displayDestination: false,
+        displayType: false,
         displayC02: false,
         displayPeculiarities: true,
         displayHeaders: true,
@@ -68,14 +69,16 @@ Module.register("MMM-SNCF", {
 
         /***************************************************/
 
-
+        // Disables options not compatible with departure mode
         switch (this.config.mode) {
             case 1: // Mode : Departures
                 this.config.displayC02 = false;
-                this.displayPeculiarities = false;
+                this.config.displayDuration = false;
+                this.config.displayPeculiarities = false;
+                this.config.displayType = false;
                 break;
             default: // Mode : Journeys
-				this.displayPeculiarities = true;
+                this.config.displayPeculiarities = true;
                 break;
         }
 
@@ -117,7 +120,43 @@ Module.register("MMM-SNCF", {
                     nameCell.className = "td-information";
 
                     if (transport.type !== "waiting") {
-                        nameCell.innerHTML = "<span class='name'><i class='fa fa-train' aria-hidden='true'></i> " + transport.name + "</span><br />";
+                        switch (transport.physicalMode) {
+                            case 'Air':
+                                nameCell.innerHTML = "<span class='name'><i class='fa fa-plane' aria-hidden='true'></i> <span class='network'>" + transport.network + "</span> " + transport.commercialMode + " " + transport.headsign + "</span><br />";
+                                break;
+                            case 'Ferry':
+                            case 'Boat':
+                                nameCell.innerHTML = "<span class='name'><i class='fa fa-ship' aria-hidden='true'></i> <span class='network'>" + transport.network + "</span> " + transport.commercialMode + " " + transport.headsign + "</span><br />";
+                                break;
+                            case 'Bus':
+                            case 'BusRapidTransit':
+                            case 'Coach':
+                            case 'Shuttle':
+                                nameCell.innerHTML = "<span class='name'><i class='fa fa-bus' aria-hidden='true'></i> <span class='network'>" + transport.network + "</span> " + transport.commercialMode + " " + transport.code + "</span><br />";
+                                break;
+                            case 'Metro':
+                                nameCell.innerHTML = "<span class='name'><i class='fa fa-subway' aria-hidden='true'></i> <span class='network'>" + transport.network + "</span> " + transport.commercialMode + " " + transport.headsign + "</span><br />";
+                                break;
+                            case 'Taxi':
+                                nameCell.innerHTML = "<span class='name'><i class='fa fa-taxi' aria-hidden='true'></i> <span class='network'>" + transport.network + "</span> " + transport.commercialMode + " " + transport.headsign + "</span><br />";
+                                break;
+                            case 'Train de banlieue / RER':
+                                nameCell.innerHTML = "<span class='name'><i class='fa fa-train' aria-hidden='true'></i> <span class='network'>" + transport.network + "</span> " + transport.commercialMode + " " + transport.code + "</span><br />";
+                                break;
+                            case 'LocalTrain':
+                            case 'LongDistanceTrain':
+                            case 'Train':
+                            case 'Tramway':
+                            case 'RailShuttle':
+                            case 'RapidTransit':
+                                nameCell.innerHTML = "<span class='name'><i class='fa fa-train' aria-hidden='true'></i> <span class='network'>" + transport.network + "</span> " + transport.commercialMode + " " + transport.headsign + "</span><br />";
+                                break;
+                            case 'SuspendedCableCar':
+                            case 'Funicular':
+                            default:
+                                nameCell.innerHTML = "<span class='name'><span class='network'>" + transport.network + "</span> " + transport.commercialMode + " " + transport.code + " " + transport.headsign + "</span><br />";
+                                break;
+                        }
                     } else {
                         nameCell.innerHTML = "<i class='fas fa-walking' aria-hidden='true'></i>";
                     }
@@ -128,19 +167,19 @@ Module.register("MMM-SNCF", {
                 var dateCell = document.createElement("td");
                 dateCell.className = "td-date";
 
-                if (transport.delay == 0 || transport.delay == null) {
+                if (transport.delay == undefined) {
                     dateCell.innerHTML = transport.date;
                 } else {
                     dateCell.innerHTML = "<span class='old-horaire'>" + transport.originalDate + "</span>";
 
-                    if (transport.disruptionInfo !== null) {
+                    if (transport.disruptionInfo !== null && transport.disruptionInfo.amended_departure_time != undefined) {
                         dateCell.innerHTML += "<br /><span>" + transport.disruptionInfo.amended_departure_time + "</span>"; // Nouvelle heure de départ
                     }
                 }
 
                 row.appendChild(dateCell);
 
-                if (this.config.displayDuration) {
+                if (this.config.displayDuration && transport.duration != undefined) {
                     var durationCell = document.createElement("td");
                     durationCell.className = "td-duration";
 
@@ -149,7 +188,7 @@ Module.register("MMM-SNCF", {
                     row.appendChild(durationCell);
                 }
 
-                if (this.config.displayDestination) {
+                if (this.config.displayDestination && transport.destination != undefined) {
                     var destinationCell = document.createElement("td");
                     destinationCell.className = "td-destination";
 
@@ -167,32 +206,22 @@ Module.register("MMM-SNCF", {
                     } else {
                         switch (transport.state) {
                             case 'SIGNIFICANT_DELAYS':
-                                if (transport.delay != "" && transport.delay !== null) {
-                                    stateCell.innerHTML = "<span class='state'><i class='fa fa-clock-o' aria-hidden='true'></i>&nbsp" + this.translate("significant_delay") + "&nbsp" + transport.delay + "</span>";
+                                if (transport.delay > 0) {
+                                    stateCell.innerHTML = "<span class='state'><i class='fa fa-clock-o' aria-hidden='true'></i>&nbsp" + this.translate(transport.state.toLowerCase()) + "&nbsp" + transport.delay + "</span>";
                                 } else {
-                                    stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + this.translate("significant_delay") + "</span>";
+                                    stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + this.translate(transport.state.toLowerCase()) + "</span>";
                                 }
                                 break;
-                            case 'REDUCED_SERVICE':
-                                stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + this.translate("reduced_service") + "</span>";
-                                break;
                             case 'NO_SERVICE':
-                                stateCell.innerHTML = "<span class='deleted'><i class='fa fa-ban' aria-hidden='true'></i>&nbsp" + this.translate("no_service") + "</span>";
+                                stateCell.innerHTML = "<span class='deleted'><i class='fa fa-ban' aria-hidden='true'></i>&nbsp" + this.translate(transport.state.toLowerCase()) + "</span>";
                                 break;
+							case 'REDUCED_SERVICE':
                             case 'MODIFIED_SERVICE':
-                                stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + this.translate("modified_service") + "</span>";
-                                break;
                             case 'ADDITIONAL_SERVICE':
-                                stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + this.translate("additional_service") + "</span>";
-                                break;
                             case 'UNKNOWN_EFFECT':
-                                stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + this.translate("unknown_effect") + "</span>";
-                                break;
                             case 'DETOUR':
-                                stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + this.translate("modified_service") + "</span>";
-                                break;
                             case 'OTHER_EFFECT':
-                                stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + this.translate("other_effect") + "</span>";
+                                stateCell.innerHTML = "<span class='state'><i class='fa fa-exclamation-triangle aria-hidden='true'></i>&nbsp" + this.translate(transport.state.toLowerCase()) + "</span>";
                             case undefined:
                                 break;
                             default:
@@ -201,11 +230,20 @@ Module.register("MMM-SNCF", {
                         }
                     }
 
-                    if (transport.disruptionInfo !== null) {
+                    if (transport.disruptionInfo !== null && transport.disruptionInfo.cause != undefined) {
                         stateCell.innerHTML += "<br /><span class='disruption-cause'>" + transport.disruptionInfo.cause + "</span>";
                     }
 
                     row.appendChild(stateCell);
+                }
+
+                if (this.config.displayType && transport.journeyType != undefined) {
+                    var typeCell = document.createElement("td");
+                    typeCell.className = "td-type";
+
+                    typeCell.innerHTML = "<span>" + this.translate(transport.journeyType) + "</span>";
+
+                    row.appendChild(typeCell);
                 }
 
                 if (this.config.displayC02 && transport.c02 != undefined) {
@@ -226,7 +264,7 @@ Module.register("MMM-SNCF", {
                 if (this.config.displayName) {
                     var h1 = document.createElement("th");
                     h1.className = "th-transilien";
-                    h1.innerHTML = this.translate("information");
+                    h1.innerHTML = this.translate("type_transport");
                     rowHeader.appendChild(h1);
                 }
 
@@ -252,15 +290,22 @@ Module.register("MMM-SNCF", {
                 if (this.config.displayPeculiarities) {
                     var h5 = document.createElement("th");
                     h5.className = "th-transilien";
-                    h5.innerHTML = this.translate("peculiarities");
+                    h5.innerHTML = this.translate("status");
                     rowHeader.appendChild(h5);
                 }
 
-                if (this.config.displayC02) {
+                if (this.config.displayType) {
                     var h6 = document.createElement("th");
                     h6.className = "th-transilien";
-                    h6.innerHTML = this.translate("c02");
+                    h6.innerHTML = this.translate("type");
                     rowHeader.appendChild(h6);
+                }
+
+                if (this.config.displayC02) {
+                    var h7 = document.createElement("th");
+                    h7.className = "th-transilien";
+                    h7.innerHTML = this.translate("c02");
+                    rowHeader.appendChild(h7);
                 }
 
                 table.childNodes[0] = rowHeader;
