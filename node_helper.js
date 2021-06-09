@@ -47,7 +47,7 @@ module.exports = NodeHelper.create({
         request.end(function(r) {
             if (r.error) {
                 if (this.config.debugging) {
-                    console.log(this.name + " : " + r.error);
+                    console.log(that.name + " : " + r.error);
                     console.log(r.body); // Display error
                 }
                 retry = true;
@@ -56,7 +56,7 @@ module.exports = NodeHelper.create({
             }
 
             if (retry) {
-                this.scheduleUpdate((this.loaded) ? -1 : this.config.retryDelay);
+                that.scheduleUpdate((that.loaded) ? -1 : this.config.retryDelay);
             }
         });
     },
@@ -143,6 +143,8 @@ module.exports = NodeHelper.create({
     },
 
     socketNotificationReceived: function(notification, payload) {
+        const that = this;
+
         if (payload.debugging) {
             console.log("Notif received: " + notification);
             console.log(payload);
@@ -151,7 +153,7 @@ module.exports = NodeHelper.create({
         if (notification === 'CONFIG' && this.started == false) {
             this.config = payload;
             this.started = true;
-            this.scheduleUpdate(this.config.initialLoadDelay);
+            that.scheduleUpdate(this.config.initialLoadDelay);
         }
     },
 
@@ -162,20 +164,17 @@ module.exports = NodeHelper.create({
             return emission.toFixed(2) + " kg";
         }
 
-        return c02;
+        return undefined;
     },
 
     timeFormatting: function(totalMinutes) {
         if (totalMinutes >= 60) {
-            var hours = Math.floor(totalMinutes / 60);
-            var minutes = totalMinutes % 60;
-
-            return hours + " h " + minutes + " min";
-        } else if (totalMinutes > 0) {
-            return totalMinutes + " min";
+            return Math.floor(totalMinutes / 60) + " h " + totalMinutes % 60 + " min";
+        } else if (totalMinutes > 0){
+            return totalMinutes % 60 + " min";
         }
-
-        return null;
+		
+		return undefined;
     },
 
     findDestination: function(section) {
@@ -226,6 +225,8 @@ module.exports = NodeHelper.create({
 
     trainDepartures: function(departures) {
         if (departures !== undefined) {
+            var that = this;
+
             for (var i = 0; i < departures.length; i++) {
                 if (departures[i] !== undefined) {
                     var date = departures[i].stop_date_time.departure_date_time;
@@ -286,17 +287,16 @@ module.exports = NodeHelper.create({
                     }
 
                     this.transports.push({
-                        name: departures[i].display_informations !== undefined ? departures[i].display_informations.commercial_mode + " N°" + departures[i].display_informations.headsign : "ND",
-                        //type: departures[i].type,
-                        date: date !== undefined ? moment(date).format(this.config.dateFormat) : null,
-                        originalDate: originalDate !== undefined ? moment(originalDate).format(this.config.dateFormat) : null,
+                        code: departures[i].display_informations !== undefined ? departures[i].display_informations.code : undefined,
+                        headsign: departures[i].display_informations !== undefined ? departures[i].display_informations.headsign : undefined,
+                        commercialMode: departures[i].display_informations !== undefined ? departures[i].display_informations.commercial_mode : undefined,
+                        network: departures[i].display_informations !== undefined ? departures[i].display_informations.network : undefined,
+                        physicalMode: departures[i].display_informations !== undefined ? departures[i].display_informations.physical_mode : undefined,
+                        date: date !== undefined ? moment(date).format(this.config.dateFormat) : undefined,
+                        originalDate: originalDate !== undefined ? moment(originalDate).format(this.config.dateFormat) : undefined,
                         destination: departures[i].display_informations.direction,
-                        //duration: this.timeFormatting(departures[i].duration / 60), // duration in minutes
-                        delay: this.timeFormatting(delay),
+                        delay: that.timeFormatting(delay),
                         disruptionInfo: disruptionInfo,
-                        //state: departures[i].status,
-                        //endOfJourney: this.isEndOfTheDay(departures[i].to),
-                        //c02: this.c02Emission(departures[i].co2_emission.unit, departures[i].co2_emission.value),
                     });
                 }
             }
@@ -305,6 +305,8 @@ module.exports = NodeHelper.create({
 
     trainJourneys: function(journeys) {
         if (journeys !== undefined) {
+            var that = this;
+
             for (var i = 0; i < journeys.length; i++) {
                 if (journeys[i] !== undefined) {
                     // Parcours des trajets (Train + attente)
@@ -373,17 +375,22 @@ module.exports = NodeHelper.create({
                             }
 
                             this.transports.push({
-                                name: section.display_informations !== undefined ? section.display_informations.commercial_mode + " N°" + section.display_informations.headsign : "ND",
+                                code: section.display_informations !== undefined ? section.display_informations.code : undefined,
+                                headsign: section.display_informations !== undefined ? section.display_informations.headsign : undefined,
+                                commercialMode: section.display_informations !== undefined ? section.display_informations.commercial_mode : undefined,
+                                physicalMode: section.display_informations !== undefined ? section.display_informations.physical_mode : undefined,
+                                network: section.display_informations !== undefined ? section.display_informations.network : undefined,
+                                date: section.type != "waiting" && date !== undefined ? moment(date).format(this.config.dateFormat) : undefined,
+                                originalDate: section.type != "waiting" && originalDate !== undefined ? moment(originalDate).format(this.config.dateFormat) : undefined,
+                                journeyType: journeys[i].type,
                                 type: section.type,
-                                date: section.type != "waiting" && date !== undefined ? moment(date).format(this.config.dateFormat) : null,
-                                originalDate: section.type != "waiting" && originalDate !== undefined ? moment(originalDate).format(this.config.dateFormat) : null,
-                                destination: this.findDestination(section),
-                                duration: this.timeFormatting(section.duration / 60), // duration in minutes
-                                delay: this.timeFormatting(delay),
+                                destination: that.findDestination(section),
+                                duration: that.timeFormatting(section.duration / 60), // duration in minutes
+                                delay: that.timeFormatting(delay),
                                 disruptionInfo: disruptionInfo,
                                 state: journeys[i].status,
-                                endOfJourney: this.isEndOfTheDay(section.to),
-                                c02: this.c02Emission(section.co2_emission.unit, section.co2_emission.value),
+                                endOfJourney: that.isEndOfTheDay(section.to),
+                                c02: that.c02Emission(section.co2_emission.unit, section.co2_emission.value),
                             });
                         }
                     }
