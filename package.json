@@ -1,15 +1,14 @@
 {
   "name": "MMM-SNCF",
   "version": "0.2.1",
-  "description": "SNCF Next departure module for MagicMirror",
+  "description": "SNCF Next departure module for MagicMirror².",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jvanoost/MMM-SNCF"
   },
   "keywords": [
     "magic mirror",
-    "smart mirror",
-    "localtransport",
+    "public transport",
     "module",
     "sncf",
     "train"
